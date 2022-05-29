@@ -18,7 +18,12 @@ public class DBHomeController {
     public void onDeleteCustomerClick(ActionEvent actionEvent) {
     }
 
-    public void onUpdateCustomerClick(ActionEvent actionEvent) {
+    public void onUpdateCustomerClick(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("../sample/updateCustomer.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void onAddCustomerClick(ActionEvent actionEvent) throws IOException {
@@ -32,9 +37,19 @@ public class DBHomeController {
     public void OnDeleteAppointmentClick(ActionEvent actionEvent) {
     }
 
-    public void OnUpdateAppointmentClick(ActionEvent actionEvent) {
+    public void OnUpdateAppointmentClick(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("../sample/updateAppointment.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void onAddAppointmentClick(ActionEvent actionEvent) {
+    public void onAddAppointmentClick(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("../sample/addAppointment.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 }

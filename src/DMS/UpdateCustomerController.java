@@ -2,7 +2,7 @@ package DMS;
 
 import javafx.fxml.FXML;
 
-public class AddCustomerController {
+public class UpdateCustomerController {
 
     @FXML
     public void OnSubmitButtonClick() {

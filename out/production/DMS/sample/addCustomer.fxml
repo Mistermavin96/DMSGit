@@ -6,9 +6,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="273.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DMS.CustomerController">
+<AnchorPane prefHeight="273.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DMS.AddCustomerController">
    <children>
-      <Label layoutX="146.0" layoutY="6.0" text="Add a customer" />
+      <Label layoutX="146.0" layoutY="6.0" text="Add customer" />
       <Label layoutX="14.0" layoutY="31.0" text="Customer_ID" />
       <Label layoutX="14.0" layoutY="59.0" text="Customer Name" />
       <Label layoutX="14.0" layoutY="90.0" text="Address" />
