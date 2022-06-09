@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DMS.DBHomeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DMS.DBHomeController">
     <Button fx:id="btnAddAppointment" layoutX="50.0" layoutY="641.0" onAction="#onAddAppointmentClick" text="Add" />
     <Button fx:id="btnUpdateAppointment" layoutX="340.0" layoutY="641.0" mnemonicParsing="false" onAction="#OnUpdateAppointmentClick" text="Update" />
     <Button fx:id="btnDeleteAppointment" layoutX="625.0" layoutY="641.0" mnemonicParsing="false" onAction="#OnDeleteAppointmentClick" text="Delete" />
@@ -39,4 +43,8 @@
     </TableView>
     <RadioButton fx:id="rbWeek" layoutX="201.0" layoutY="376.0" mnemonicParsing="false" onAction="#OnWeekClick" text="Sort by Week" />
     <RadioButton fx:id="rbMonth" layoutX="434.0" layoutY="376.0" mnemonicParsing="false" onAction="#OnMonthClick" text="Sort by Month" />
+   <Button layoutX="72.0" layoutY="41.0" mnemonicParsing="false" text="Customers" />
+   <Button layoutX="62.0" layoutY="142.0" mnemonicParsing="false" text="Appointments" />
+   <Button layoutX="76.0" layoutY="243.0" mnemonicParsing="false" text="Schedule" />
+   <Label layoutX="74.0" layoutY="14.0" text="Reporting" />
 </AnchorPane>
