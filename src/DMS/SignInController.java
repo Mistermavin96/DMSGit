@@ -28,19 +28,17 @@ public class SignInController {
     @FXML public Label lblPrompt;
     public static ResultSet loginInfo;
 
-
-    //This part is just for translation!
-    {
-        /*ResourceBundle loginBundle = ResourceBundle.getBundle("LoginResource");
+    @FXML private void initialize() {
+        ResourceBundle loginBundle = ResourceBundle.getBundle("LoginResource");
         txtUsername.setPromptText(loginBundle.getString("txtUserPrompt"));
         txtPassword.setPromptText(loginBundle.getString("txtPassPrompt"));
         btnSignIn.setText(loginBundle.getString("btnSignIn"));
-        lblPrompt.setText(loginBundle.getString("lblPrompt"));*/
+        lblPrompt.setText(loginBundle.getString("lblPrompt"));
+        lblLocation.setText(loginBundle.getString("lblLocation") + Locale.getDefault().getDisplayCountry());
     }
-
+    
     @FXML
     protected void onSignInButtonClick(ActionEvent e) throws IOException {
-        //Locale.setDefault(Locale.FRENCH);
         ResourceBundle loginBundle = ResourceBundle.getBundle("LoginResource");
         ButtonType btnConfirm= new ButtonType(loginBundle.getString("errConfirm"));
 
