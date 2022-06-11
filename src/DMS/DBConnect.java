@@ -18,14 +18,12 @@ public class DBConnect {
         try {
             Class.forName(driver);
             connection = DriverManager.getConnection(URL, username, password);
-            System.out.println("Connection successful!");
         } catch (Exception e) { System.out.println("Error:" + e.getMessage()); }
     }
 
     public static void closeConnection(){
         try {
             connection.close();
-            System.out.println("Connection closed!");
         } catch (Exception e) { System.out.println("Error:" + e.getMessage()); }
     }
 }

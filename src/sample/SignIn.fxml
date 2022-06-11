@@ -11,9 +11,9 @@
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-    <Label text="Please sign in with your User ID and password below" />
-    <TextField id=" " fx:id="txtUserID" promptText="User ID" />
-    <PasswordField id="txtPassword" fx:id="txtPassword" prefHeight="25.0" prefWidth="364.0" promptText="Password" />
-    <Button id="BtnSignIn" fx:id="btnSignIn" mnemonicParsing="false" onAction="#onSignInButtonClick" text="Sign In" />
-    <Label id="lblLocation" fx:id="lblLocation" text="Logging in from: Unknown" />
+    <Label fx:id="lblPrompt" text="Please sign in with your User ID and password below" />
+    <TextField fx:id="txtUsername" promptText="Username" />
+    <PasswordField fx:id="txtPassword" prefHeight="25.0" prefWidth="364.0" promptText="Password" />
+    <Button fx:id="btnSignIn" mnemonicParsing="false" onAction="#onSignInButtonClick" text="Sign In" />
+    <Label fx:id="lblLocation" text="Logging in from:" />
 </VBox>

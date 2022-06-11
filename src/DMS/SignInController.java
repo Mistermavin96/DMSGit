@@ -15,18 +15,34 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class SignInController {
 
-    public TextField txtUserID;
-    public PasswordField txtPassword;
-    public Button btnSignIn;
-    public Label lblLocation;
+    @FXML public TextField txtUsername;
+    @FXML public PasswordField txtPassword;
+    @FXML public Button btnSignIn;
+    @FXML public Label lblLocation;
+    @FXML public Label lblPrompt;
     public static ResultSet loginInfo;
+
+
+    //This part is just for translation!
+    {
+        /*ResourceBundle loginBundle = ResourceBundle.getBundle("LoginResource");
+        txtUsername.setPromptText(loginBundle.getString("txtUserPrompt"));
+        txtPassword.setPromptText(loginBundle.getString("txtPassPrompt"));
+        btnSignIn.setText(loginBundle.getString("btnSignIn"));
+        lblPrompt.setText(loginBundle.getString("lblPrompt"));*/
+    }
 
     @FXML
     protected void onSignInButtonClick(ActionEvent e) throws IOException {
+        //Locale.setDefault(Locale.FRENCH);
+        ResourceBundle loginBundle = ResourceBundle.getBundle("LoginResource");
+        ButtonType btnConfirm= new ButtonType(loginBundle.getString("errConfirm"));
 
         DBConnect.openConnection();
 
@@ -40,8 +56,8 @@ public class SignInController {
                 out.print("Time Attempted: " + timeStamp + "\t");
                 out.print("Attempt Status: ");
 
-                if (Objects.equals(txtUserID.getText(), "")) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "User ID cannot be empty.");
+                if (Objects.equals(txtUsername.getText(), "")) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, loginBundle.getString("errEmptyUser"), btnConfirm);
                     alert.showAndWait();
                     out.print("Failed\n");
                     out.close();
@@ -49,7 +65,7 @@ public class SignInController {
                     return;
 
                 } else if (Objects.equals(txtPassword.getText(), "")){
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Password cannot be empty.");
+                    Alert alert = new Alert(Alert.AlertType.ERROR, loginBundle.getString("errEmptyPass"), btnConfirm);
                     alert.showAndWait();
                     out.print("Failed\n");
                     out.close();
@@ -57,14 +73,14 @@ public class SignInController {
                     return;
 
                 } else while (loginInfo.next()) {
-                    if (loginInfo.getString("User_Name").equals(txtUserID.getText()) && loginInfo.getString("Password").equals(txtPassword.getText())) {
+                    if (loginInfo.getString("User_Name").equals(txtUsername.getText()) && loginInfo.getString("Password").equals(txtPassword.getText())) {
                         FXMLLoader fxmlLoader = new FXMLLoader();
                         fxmlLoader.setLocation(getClass().getResource("/sample/DBHome.fxml"));
                         Parent root = fxmlLoader.load();
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) ((javafx.scene.Node) e.getSource()).getScene().getWindow();
                         stage.setScene(scene);
-                        stage.setTitle("DMS System");
+                        stage.setTitle("AppointX");
                         stage.show();
                         out.print("Successful\n");
                         out.close();
@@ -72,13 +88,13 @@ public class SignInController {
                         return;
                     }
                 }
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Login Credentials Invalid");
+                Alert alert = new Alert(Alert.AlertType.ERROR, loginBundle.getString("errWrongLogin"), btnConfirm);
                 alert.showAndWait();
                 out.print("Failed\n");
                 out.close();
                 DBConnect.closeConnection();
             } catch (Exception e1){
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Error Writing to Log.");
+                Alert alert = new Alert(Alert.AlertType.ERROR, loginBundle.getString("errLogFail"), btnConfirm);
                 System.out.println(e1);
                 alert.showAndWait();
                 DBConnect.closeConnection();
