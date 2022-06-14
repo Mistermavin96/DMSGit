@@ -27,7 +27,7 @@
         </columns>
     </TableView>
 
-    <TableView fx:id="ApppointmentTable" layoutX="8.0" layoutY="403.0" prefHeight="227.0" prefWidth="717.0" AnchorPane.topAnchor="403.0">
+    <TableView fx:id="AppointmentTable" layoutX="8.0" layoutY="403.0" prefHeight="227.0" prefWidth="717.0" AnchorPane.topAnchor="403.0">
         <columns>
             <TableColumn fx:id="A_Appointment_ID" prefWidth="99.0" text="Appointment_ID" />
             <TableColumn fx:id="A_Title" prefWidth="31.0" text="Title" />

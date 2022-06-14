@@ -1,5 +1,8 @@
 package DMS;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class Appointment {
     private int Appointment_ID;
     private String Title;
@@ -11,6 +14,7 @@ public class Appointment {
     private int Customer_ID;
     private int User_ID;
     private int Contact_ID;
+    private static final ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
     public Appointment(int id, String Title, String Description, String Location, String Type, String Start, String End, int Customer_ID, int User_ID, int Contact_ID) {
         this.Appointment_ID = Appointment_ID;
@@ -105,4 +109,15 @@ public class Appointment {
         return Type;
     }
 
+    public static ObservableList<Appointment> getAllAppointments() {
+        return allAppointments;
+    }
+
+    public static void addAppointment(Appointment newAppointment) {
+        allAppointments.add(newAppointment);
+    }
+
+    public static void deleteAppointment(Appointment newAppointment) {
+        allAppointments.remove(newAppointment);
+    }
 }

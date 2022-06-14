@@ -1,5 +1,8 @@
 package DMS;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class Customer {
     private int Customer_ID;
     private int Division_ID;
@@ -7,6 +10,7 @@ public class Customer {
     private String Address;
     private String Postal_Code;
     private String Phone;
+    private static final ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
     public Customer(int Customer_ID, int Division_ID, String Customer_Name, String Address, String Postal_Code, String Phone) {
         this.Customer_ID = Customer_ID;
@@ -65,5 +69,15 @@ public class Customer {
         return Postal_Code;
     }
 
+    public static ObservableList<Customer> getAllCustomers() {
+        return allCustomers;
+    }
 
+    public static void addCustomer(Customer newCustomer) {
+        allCustomers.add(newCustomer);
+    }
+
+    public static void deleteCustomer(Customer newCustomer) {
+        allCustomers.remove(newCustomer);
+    }
 }

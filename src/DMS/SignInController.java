@@ -36,7 +36,7 @@ public class SignInController {
         lblPrompt.setText(loginBundle.getString("lblPrompt"));
         lblLocation.setText(loginBundle.getString("lblLocation") + Locale.getDefault().getDisplayCountry());
     }
-    
+
     @FXML
     protected void onSignInButtonClick(ActionEvent e) throws IOException {
         ResourceBundle loginBundle = ResourceBundle.getBundle("LoginResource");
