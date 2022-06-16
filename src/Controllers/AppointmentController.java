@@ -1,24 +1,20 @@
 package Controllers;
 
-import ClassesAndFunctions.Appointment;
-import ClassesAndFunctions.Contact;
-import ClassesAndFunctions.DBConnect;
-import ClassesAndFunctions.FieldValidation;
+import ClassesAndFunctions.*;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import static java.lang.Integer.parseInt;
+import java.time.LocalDateTime;
+import java.util.regex.Pattern;
 
 public class AppointmentController {
 
     public static Appointment tempAppointment;
-    @FXML public TextField txtCustomerID;
-    @FXML public TextField txtUserID;
-    @FXML public TextField txtEndDateAndTime;
-    @FXML public TextField txtStartDateAndTime;
+    @FXML public ComboBox<Customer> cmbCustomer;
+    @FXML public ComboBox<User> cmbUser;
+    @FXML public TextField txtStart;
+    @FXML public TextField txtEnd;
     @FXML public TextField txtType;
     @FXML public TextField txtLocation;
     @FXML public TextField txtDescription;
@@ -30,48 +26,99 @@ public class AppointmentController {
 
     public void initialize() {
         cmbContact.setItems(Contact.getAllContacts());
+        cmbCustomer.setItems(Customer.getAllCustomers());
+        cmbUser.setItems(User.getAllUsers());
         if (tempAppointment != null) {
-            txtCustomerID.setText(String.valueOf(tempAppointment.getCustomer_ID()));
+            cmbCustomer.setValue(Appointment.getCustomerByID(tempAppointment.getCustomer_ID()));
             txtAppointmentID.setText(String.valueOf(tempAppointment.getAppointment_ID()));
-            txtUserID.setText(String.valueOf(tempAppointment.getUser_ID()));
+            cmbUser.setValue(Appointment.getUserByID(tempAppointment.getUser_ID()));
             txtTitle.setText(tempAppointment.getTitle());
             txtType.setText(tempAppointment.getType());
             txtDescription.setText(tempAppointment.getDescription());
             txtLocation.setText(tempAppointment.getLocation());
-            txtStartDateAndTime.setText(tempAppointment.getStart());
-            txtEndDateAndTime.setText(tempAppointment.getEnd());
+            txtStart.setText(tempAppointment.getStartString());
+            txtEnd.setText(tempAppointment.getEndString());
             cmbContact.setValue(Contact.getContactByID(tempAppointment.getContact_ID()));
         }
     }
 
     @FXML
     public void OnSubmitButtonClick() {
-        FieldValidation validate = (String str, String regex) -> (str != null && str.matches(regex));
-        if (tempAppointment == null) {
-            Appointment newAppointment = new Appointment(
-                    Appointment.lastID()+1,
-                    txtTitle.getText(),
-                    txtDescription.getText(),
-                    txtLocation.getText(),
-                    txtType.getText(),
-                    txtStartDateAndTime.getText(),
-                    txtEndDateAndTime.getText(),
-                    parseInt(txtCustomerID.getText()),
-                    parseInt(txtUserID.getText()),
-                    cmbContact.getSelectionModel().getSelectedItem().getContact_ID());
-            Appointment.addAppointment(newAppointment);
-        } else {
-            tempAppointment.setTitle(txtTitle.getText());
-            tempAppointment.setDescription(txtDescription.getText());
-            tempAppointment.setLocation(txtLocation.getText());
-            tempAppointment.setType(txtType.getText());
-            tempAppointment.setStart(txtStartDateAndTime.getText());
-            tempAppointment.setEnd(txtEndDateAndTime.getText());
-            tempAppointment.setCustomer_ID(parseInt(txtCustomerID.getText()));
-            tempAppointment.setUser_ID(parseInt(txtUserID.getText()));
-            tempAppointment.setContact_ID(cmbContact.getSelectionModel().getSelectedItem().getContact_ID());
-        }
-    }
+            if (txtTitle.getText() != null && txtTitle.getText().length() <= 50) {
+                if (txtDescription.getText() != null && txtDescription.getText().length() <= 50) {
+                    if (txtLocation.getText() != null && txtLocation.getText().length() <= 50) {
+                        if (txtType.getText() != null && txtType.getText().length() <= 50) {
+                            if (txtStart.getText() != null && Pattern.matches("(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})", txtStart.getText())) {
+                                if (txtEnd.getText() != null && Pattern.matches("(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})", txtEnd.getText())) {
+                                    if (cmbCustomer.getSelectionModel().getSelectedItem() != null) {
+                                        if (cmbUser.getSelectionModel().getSelectedItem() != null) {
+                                            if (cmbContact.getSelectionModel().getSelectedItem() != null) {
+                                                if (tempAppointment == null) {
+                                                    if (Appointment.lastID() + 1 <= 999999999) {
+                                                        Appointment newAppointment = new Appointment(
+                                                                Appointment.lastID() + 1,
+                                                                txtTitle.getText(),
+                                                                txtDescription.getText(),
+                                                                txtLocation.getText(),
+                                                                txtType.getText(),
+                                                                LocalDateTime.parse(txtStart.getText()),
+                                                                LocalDateTime.parse(txtEnd.getText()),
+                                                                cmbCustomer.getSelectionModel().getSelectedItem().getCustomer_ID(),
+                                                                cmbUser.getSelectionModel().getSelectedItem().getUser_ID(),
+                                                                cmbContact.getSelectionModel().getSelectedItem().getContact_ID());
+                                                        Appointment.addAppointment(newAppointment);
+                                                    } else {
+                                                        Alert alert = new Alert(Alert.AlertType.ERROR, "Appointment ID overflow, cannot create appointment.");
+                                                        alert.showAndWait();
+                                                    }
+                                                } else {
+                                                        tempAppointment.setTitle(txtTitle.getText());
+                                                        tempAppointment.setDescription(txtDescription.getText());
+                                                        tempAppointment.setLocation(txtLocation.getText());
+                                                        tempAppointment.setType(txtType.getText());
+                                                        tempAppointment.setStart(LocalDateTime.parse(txtStart.getText()));
+                                                        tempAppointment.setEnd(LocalDateTime.parse(txtEnd.getText()));
+                                                        tempAppointment.setCustomer_ID(cmbCustomer.getSelectionModel().getSelectedItem().getCustomer_ID());
+                                                        tempAppointment.setUser_ID(cmbUser.getSelectionModel().getSelectedItem().getUser_ID());
+                                                        tempAppointment.setContact_ID(cmbContact.getSelectionModel().getSelectedItem().getContact_ID());
+                                                    }
+                                                } else {
+                                                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please choose a contact.");
+                                                    alert.showAndWait();
+                                                }
+                                            } else {
+                                                Alert alert = new Alert(Alert.AlertType.ERROR, "Please choose a user.");
+                                                alert.showAndWait();
+                                            }
+                                        } else {
+                                            Alert alert = new Alert(Alert.AlertType.ERROR, "Please choose a customer.");
+                                            alert.showAndWait();
+                                        }
+                                    } else {
+                                        Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid date in the format YYYY-MM-DD HH:MM:SS.");
+                                        alert.showAndWait();
+                                    }
+                                } else {
+                                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid date in the format YYYY-MM-DD HH:MM:SS.");
+                                    alert.showAndWait();
+                                }
+                            } else {
+                                Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid type with less than 50 characters.");
+                                alert.showAndWait();
+                            }
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid location with less than 50 characters.");
+                            alert.showAndWait();
+                        }
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid description with less than 50 characters.");
+                        alert.showAndWait();
+                    }
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid title with less than 50 characters.");
+                    alert.showAndWait();
+                }
+            }
 
     @FXML
     public void OnCancelButtonClick() {

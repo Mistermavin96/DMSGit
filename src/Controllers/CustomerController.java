@@ -36,27 +36,53 @@ public class CustomerController {
 
     @FXML
     public void OnSubmitButtonClick() {
-        FieldValidation validate = (String str, String regex) -> (str != null && str.matches(regex));
-        if (tempCustomer == null) {
-            Customer newCustomer = new Customer(
-                    Customer.lastID()+1,
-                    cmbFirstLevelDomain.getSelectionModel().getSelectedItem().getDivision_ID(),
-                    txtCustomerName.getText(),
-                    txtAddress.getText(),
-                    txtPostalCode.getText(),
-                    txtPhoneNumber.getText()
-            );
-            Customer.addCustomer(newCustomer);
+        if (cmbFirstLevelDomain.getSelectionModel().getSelectedItem() != null) {
+            if (txtCustomerName.getText() != null && txtCustomerName.getText().length() <= 50) {
+                if (txtAddress.getText() != null && txtAddress.getText().length() <= 100) {
+                    if (txtPhoneNumber.getText() != null && txtPhoneNumber.getText().length() <= 50) {
+                        if (txtPostalCode.getText() != null && txtPostalCode.getText().length() <= 50) {
+                            if (tempCustomer == null) {
+                                if (Customer.lastID() + 1 <= 999999999) {
+                                    Customer newCustomer = new Customer(
+                                            Customer.lastID() + 1,
+                                            cmbFirstLevelDomain.getSelectionModel().getSelectedItem().getDivision_ID(),
+                                            txtCustomerName.getText(),
+                                            txtAddress.getText(),
+                                            txtPostalCode.getText(),
+                                            txtPhoneNumber.getText()
+                                    );
+                                    Customer.addCustomer(newCustomer);
+                                } else {
+                                    Alert alert = new Alert(Alert.AlertType.ERROR, "ID out of bounds, cannot create customer.");
+                                    alert.showAndWait();
+                                }
+                            } else {
+                                tempCustomer.setAddress(txtAddress.getText());
+                                tempCustomer.setDivision_ID(cmbFirstLevelDomain.getSelectionModel().getSelectedItem().getDivision_ID());
+                                tempCustomer.setCustomer_Name(txtCustomerName.getText());
+                                tempCustomer.setPhone(txtPhoneNumber.getText());
+                                tempCustomer.setPostal_Code(txtPostalCode.getText());
+                            }
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.ERROR, "Postal code must not be empty and 50 characters or less.");
+                            alert.showAndWait();
+                        }
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Phone number must not be empty and 50 characters or less.");
+                        alert.showAndWait();
+                    }
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Address must not be empty and 100 characters or less.");
+                    alert.showAndWait();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Name must not be empty and 50 characters or less.");
+                alert.showAndWait();
+            }
         } else {
-            tempCustomer.setAddress(txtAddress.getText());
-            tempCustomer.setDivision_ID(cmbFirstLevelDomain.getSelectionModel().getSelectedItem().getDivision_ID());
-            tempCustomer.setCustomer_Name(txtCustomerName.getText());
-            tempCustomer.setPhone(txtPhoneNumber.getText());
-            tempCustomer.setPostal_Code(txtPostalCode.getText());
-            System.out.println("Updated");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please choose a country and divison.");
+            alert.showAndWait();
         }
-
-
     }
 
     @FXML

@@ -69,6 +69,11 @@ public class Customer {
         return Postal_Code;
     }
 
+    @Override
+    public String toString() {
+      return Customer_Name;
+    }
+
     public static ObservableList<Customer> getAllCustomers() {
         return allCustomers;
     }

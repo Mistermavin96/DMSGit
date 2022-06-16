@@ -11,6 +11,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.*;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 public class DBHomeController {
@@ -34,9 +36,26 @@ public class DBHomeController {
         @FXML TableColumn<Customer, String> C_Number;
         @FXML TableColumn<Customer, String> C_Address;
 
+        @FXML Label lblAlert;
+
     @FXML private void initialize() {
         ObservableList<Customer> CustomerList = Customer.getAllCustomers();
         ObservableList<Appointment> AppointmentList = Appointment.getAllAppointments();
+        int i = 0;
+        boolean hasAppointment = false;
+        while (i < Appointment.getAllAppointments().size()) {
+            if (Appointment.getAllAppointments().get(i).getStart().until(LocalDateTime.now(), ChronoUnit.MINUTES) <= 15) {
+                String alertMessage = "You have appointment of ID " + Appointment.getAllAppointments().get(i).getAppointment_ID() + " at " + Appointment.getAllAppointments().get(i).getStart().toLocalTime() + " on " + Appointment.getAllAppointments().get(i).getStart().toLocalDate();
+                hasAppointment = true;
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, alertMessage);
+                alert.showAndWait();
+            }
+            i++;
+        }
+        if (!hasAppointment) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "You have no upcoming appointments");
+            alert.showAndWait();
+        }
 
             CustomerTable.setItems(CustomerList);
             C_Customer_ID.setCellValueFactory(new PropertyValueFactory<>("Customer_ID"));
@@ -61,6 +80,9 @@ public class DBHomeController {
     }
 
     public void OnMonthClick() {
+    }
+
+    public void OnDefaultClick() {
     }
 
     public void onDeleteCustomerClick() {
@@ -142,4 +164,5 @@ public class DBHomeController {
         stage.setScene(scene);
         stage.show();
     }
+
 }

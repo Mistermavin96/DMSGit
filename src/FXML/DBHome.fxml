@@ -5,6 +5,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.DBHomeController">
@@ -41,10 +42,14 @@
             <TableColumn fx:id="A_StartDate" prefWidth="112.0" text="Start Date &amp; Time" />
         </columns>
     </TableView>
-    <RadioButton fx:id="rbWeek" layoutX="201.0" layoutY="376.0" mnemonicParsing="false" onAction="#OnWeekClick" text="Sort by Week" />
-    <RadioButton fx:id="rbMonth" layoutX="434.0" layoutY="376.0" mnemonicParsing="false" onAction="#OnMonthClick" text="Sort by Month" />
+    <RadioButton fx:id="rdoWeek" layoutX="62.0" layoutY="376.0" mnemonicParsing="false" onAction="#OnWeekClick" text="Sort by Week">
+      <toggleGroup>
+         <ToggleGroup fx:id="Calendar" />
+      </toggleGroup></RadioButton>
+    <RadioButton fx:id="rdoMonth" layoutX="576.0" layoutY="376.0" mnemonicParsing="false" onAction="#OnMonthClick" text="Sort by Month" toggleGroup="$Calendar" />
    <Button layoutX="72.0" layoutY="41.0" mnemonicParsing="false" text="Customers" />
    <Button layoutX="62.0" layoutY="142.0" mnemonicParsing="false" text="Appointments" />
    <Button layoutX="76.0" layoutY="243.0" mnemonicParsing="false" text="Schedule" />
    <Label layoutX="74.0" layoutY="14.0" text="Reporting" />
+   <RadioButton fx:id="rdoDefault" layoutX="324.0" layoutY="376.0" mnemonicParsing="false" onAction="#OnDefaultClick" selected="true" text="Default Sort" toggleGroup="$Calendar" />
 </AnchorPane>

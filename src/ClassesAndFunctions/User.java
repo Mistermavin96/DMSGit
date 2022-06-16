@@ -57,4 +57,9 @@ public class User {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return Username;
+    }
 }

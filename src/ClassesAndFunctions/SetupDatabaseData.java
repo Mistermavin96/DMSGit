@@ -2,11 +2,13 @@ package ClassesAndFunctions;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 public class SetupDatabaseData {
+    public static DateTimeFormatter timeDateFormat = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
     public static void setup() {
         DBConnect.openConnection();
-
         try (Statement stmt = DBConnect.connection.createStatement()) {
             ResultSet customerSet = stmt.executeQuery("SELECT * FROM Customers");
             while (customerSet.next()) {
@@ -29,8 +31,8 @@ public class SetupDatabaseData {
                         appointmentSet.getString(3),
                         appointmentSet.getString(4),
                         appointmentSet.getString(5),
-                        appointmentSet.getString(6),
-                        appointmentSet.getString(7),
+                        LocalDateTime.parse(appointmentSet.getString(6), timeDateFormat),
+                        LocalDateTime.parse(appointmentSet.getString(7), timeDateFormat),
                         appointmentSet.getInt(12),
                         appointmentSet.getInt(13),
                         appointmentSet.getInt(14));
