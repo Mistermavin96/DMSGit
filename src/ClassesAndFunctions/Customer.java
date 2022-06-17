@@ -3,6 +3,8 @@ package ClassesAndFunctions;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.Objects;
+
 public class Customer {
     private int Customer_ID;
     private int Division_ID;
@@ -10,6 +12,8 @@ public class Customer {
     private String Address;
     private String Postal_Code;
     private String Phone;
+    private String Division_Name;
+    private String Country_Name;
     private static final ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
     public Customer(int Customer_ID, int Division_ID, String Customer_Name, String Address, String Postal_Code, String Phone) {
@@ -19,6 +23,24 @@ public class Customer {
         this.Phone = Phone;
         this.Address = Address;
         this.Postal_Code = Postal_Code;
+        this.Division_Name = Objects.requireNonNull(FirstLevelDivision.getDivisionbyDivisionID(Division_ID)).getDivision_Name();
+        this.Country_Name = Objects.requireNonNull(FirstLevelDivision.getCountryByDivisionId(Division_ID)).getCountry_Name();
+    }
+
+    public void setDivision_Name(String division_Name) {
+        Division_Name = division_Name;
+    }
+
+    public String getDivision_Name() {
+        return Division_Name;
+    }
+
+    public String getCountry_Name() {
+        return Country_Name;
+    }
+
+    public void setCountry_Name(String country_Name) {
+        Country_Name = country_Name;
     }
 
     public void setCustomer_ID(int customer_ID) {

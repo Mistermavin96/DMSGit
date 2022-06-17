@@ -11,7 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.*;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
@@ -35,8 +35,8 @@ public class DBHomeController {
         @FXML TableColumn<Customer, String> C_Name;
         @FXML TableColumn<Customer, String> C_Number;
         @FXML TableColumn<Customer, String> C_Address;
-
-        @FXML Label lblAlert;
+        @FXML TableColumn<Customer, String> C_Country;
+        @FXML TableColumn<Customer, String> C_Division;
 
     @FXML private void initialize() {
         ObservableList<Customer> CustomerList = Customer.getAllCustomers();
@@ -44,7 +44,7 @@ public class DBHomeController {
         int i = 0;
         boolean hasAppointment = false;
         while (i < Appointment.getAllAppointments().size()) {
-            if (Appointment.getAllAppointments().get(i).getStart().until(LocalDateTime.now(), ChronoUnit.MINUTES) <= 15) {
+            if (Appointment.getAllAppointments().get(i).getStart().until(ZonedDateTime.now(), ChronoUnit.MINUTES) <= 15) {
                 String alertMessage = "You have appointment of ID " + Appointment.getAllAppointments().get(i).getAppointment_ID() + " at " + Appointment.getAllAppointments().get(i).getStart().toLocalTime() + " on " + Appointment.getAllAppointments().get(i).getStart().toLocalDate();
                 hasAppointment = true;
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, alertMessage);
@@ -62,6 +62,8 @@ public class DBHomeController {
             C_Name.setCellValueFactory(new PropertyValueFactory<>("Customer_Name"));
             C_Number.setCellValueFactory(new PropertyValueFactory<>("Phone"));
             C_Address.setCellValueFactory(new PropertyValueFactory<>("Address"));
+            C_Division.setCellValueFactory(new PropertyValueFactory<>("Division_Name"));
+            C_Country.setCellValueFactory(new PropertyValueFactory<>("Country_Name"));
 
             AppointmentTable.setItems(AppointmentList);
             A_Appointment_ID.setCellValueFactory(new PropertyValueFactory<>("Appointment_ID"));
@@ -69,11 +71,11 @@ public class DBHomeController {
             A_Description.setCellValueFactory(new PropertyValueFactory<>("Description"));
             A_Location.setCellValueFactory(new PropertyValueFactory<>("Location"));
             A_Type.setCellValueFactory(new PropertyValueFactory<>("Type"));
-            A_StartDate.setCellValueFactory(new PropertyValueFactory<>("Start"));
-            A_EndDate.setCellValueFactory(new PropertyValueFactory<>("End"));
-            A_Customer_ID.setCellValueFactory(new PropertyValueFactory<>("Customer_ID"));
-            A_User_ID.setCellValueFactory(new PropertyValueFactory<>("User_ID"));
-            A_Contact.setCellValueFactory(new PropertyValueFactory<>("Contact_ID"));
+            A_StartDate.setCellValueFactory(new PropertyValueFactory<>("StartString"));
+            A_EndDate.setCellValueFactory(new PropertyValueFactory<>("EndString"));
+            A_Customer_ID.setCellValueFactory(new PropertyValueFactory<>("Customer_Name"));
+            A_User_ID.setCellValueFactory(new PropertyValueFactory<>("User_Name"));
+            A_Contact.setCellValueFactory(new PropertyValueFactory<>("Contact_Name"));
     }
 
     public void OnWeekClick() {
@@ -134,6 +136,8 @@ public class DBHomeController {
 
         if (confirmation.get() == ButtonType.OK) {
             if (AppointmentTable.getSelectionModel().getSelectedItem() != null) {
+                Alert alert1 = new Alert(Alert.AlertType.INFORMATION, "Appointment ID " + AppointmentTable.getSelectionModel().getSelectedItem().getAppointment_ID() + " has been deleted, of type " + AppointmentTable.getSelectionModel().getSelectedItem().getType() + ".");
+                alert1.showAndWait();
                 Appointment.deleteAppointment(AppointmentTable.getSelectionModel().getSelectedItem());
             } else {
                 Alert alert1 = new Alert(Alert.AlertType.ERROR, "Please select an appointment to delete");

@@ -37,10 +37,10 @@ public class CustomerController {
     @FXML
     public void OnSubmitButtonClick() {
         if (cmbFirstLevelDomain.getSelectionModel().getSelectedItem() != null) {
-            if (txtCustomerName.getText() != null && txtCustomerName.getText().length() <= 50) {
-                if (txtAddress.getText() != null && txtAddress.getText().length() <= 100) {
-                    if (txtPhoneNumber.getText() != null && txtPhoneNumber.getText().length() <= 50) {
-                        if (txtPostalCode.getText() != null && txtPostalCode.getText().length() <= 50) {
+            if (!txtCustomerName.getText().equals("") && txtCustomerName.getText().length() <= 50) {
+                if (!txtAddress.getText().equals("") && txtAddress.getText().length() <= 100) {
+                    if (!txtPhoneNumber.getText().equals("") && txtPhoneNumber.getText().length() <= 50) {
+                        if (!txtPostalCode.getText().equals("") && txtPostalCode.getText().length() <= 50) {
                             if (tempCustomer == null) {
                                 if (Customer.lastID() + 1 <= 999999999) {
                                     Customer newCustomer = new Customer(
@@ -52,6 +52,9 @@ public class CustomerController {
                                             txtPhoneNumber.getText()
                                     );
                                     Customer.addCustomer(newCustomer);
+                                    DBConnect.closeConnection();
+                                    Stage currentWindow = (Stage) btnCancel.getScene().getWindow();
+                                    currentWindow.close();
                                 } else {
                                     Alert alert = new Alert(Alert.AlertType.ERROR, "ID out of bounds, cannot create customer.");
                                     alert.showAndWait();
@@ -62,6 +65,9 @@ public class CustomerController {
                                 tempCustomer.setCustomer_Name(txtCustomerName.getText());
                                 tempCustomer.setPhone(txtPhoneNumber.getText());
                                 tempCustomer.setPostal_Code(txtPostalCode.getText());
+                                DBConnect.closeConnection();
+                                Stage currentWindow = (Stage) btnCancel.getScene().getWindow();
+                                currentWindow.close();
                             }
                         } else {
                             Alert alert = new Alert(Alert.AlertType.ERROR, "Postal code must not be empty and 50 characters or less.");
@@ -87,7 +93,6 @@ public class CustomerController {
 
     @FXML
     public void OnCancelButtonClick() {
-        DBConnect.closeConnection();
         Stage currentWindow = (Stage) btnCancel.getScene().getWindow();
         currentWindow.close();
     }

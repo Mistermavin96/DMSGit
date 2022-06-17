@@ -6,6 +6,9 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.regex.Pattern;
 
 public class AppointmentController {
@@ -44,81 +47,109 @@ public class AppointmentController {
 
     @FXML
     public void OnSubmitButtonClick() {
-            if (txtTitle.getText() != null && txtTitle.getText().length() <= 50) {
-                if (txtDescription.getText() != null && txtDescription.getText().length() <= 50) {
-                    if (txtLocation.getText() != null && txtLocation.getText().length() <= 50) {
-                        if (txtType.getText() != null && txtType.getText().length() <= 50) {
-                            if (txtStart.getText() != null && Pattern.matches("(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})", txtStart.getText())) {
-                                if (txtEnd.getText() != null && Pattern.matches("(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})", txtEnd.getText())) {
-                                    if (cmbCustomer.getSelectionModel().getSelectedItem() != null) {
-                                        if (cmbUser.getSelectionModel().getSelectedItem() != null) {
-                                            if (cmbContact.getSelectionModel().getSelectedItem() != null) {
-                                                if (tempAppointment == null) {
-                                                    if (Appointment.lastID() + 1 <= 999999999) {
-                                                        Appointment newAppointment = new Appointment(
-                                                                Appointment.lastID() + 1,
-                                                                txtTitle.getText(),
-                                                                txtDescription.getText(),
-                                                                txtLocation.getText(),
-                                                                txtType.getText(),
-                                                                LocalDateTime.parse(txtStart.getText()),
-                                                                LocalDateTime.parse(txtEnd.getText()),
-                                                                cmbCustomer.getSelectionModel().getSelectedItem().getCustomer_ID(),
-                                                                cmbUser.getSelectionModel().getSelectedItem().getUser_ID(),
-                                                                cmbContact.getSelectionModel().getSelectedItem().getContact_ID());
-                                                        Appointment.addAppointment(newAppointment);
-                                                    } else {
-                                                        Alert alert = new Alert(Alert.AlertType.ERROR, "Appointment ID overflow, cannot create appointment.");
-                                                        alert.showAndWait();
-                                                    }
+        if (!txtTitle.getText().equals("") && txtTitle.getText().length() <= 50) {
+            if (!txtDescription.getText().equals("") && txtDescription.getText().length() <= 50) {
+                if (!txtLocation.getText().equals("") && txtLocation.getText().length() <= 50) {
+                    if (!txtType.getText().equals("") && txtType.getText().length() <= 50) {
+                        if (Appointment.dateValidator(txtStart.getText())) {
+                            if (Appointment.dateValidator(txtEnd.getText())) {
+                                if (cmbCustomer.getSelectionModel().getSelectedItem() != null) {
+                                    if (cmbUser.getSelectionModel().getSelectedItem() != null) {
+                                        if (cmbContact.getSelectionModel().getSelectedItem() != null) {
+                                            ZonedDateTime StartZone = ZonedDateTime.ofInstant(LocalDateTime.parse(txtStart.getText(), SetupDatabaseData.timeDateFormat), OffsetDateTime.now().getOffset(), ZoneId.systemDefault());
+                                            ZonedDateTime EndZone = ZonedDateTime.ofInstant(LocalDateTime.parse(txtEnd.getText(), SetupDatabaseData.timeDateFormat), OffsetDateTime.now().getOffset(), ZoneId.systemDefault());
+                                            if (Appointment.selfOverlapValidator(StartZone, EndZone)) {
+                                                if (Appointment.inHoursValidator(StartZone, EndZone)) {
+                                                    if (tempAppointment == null) {
+                                                        if (Appointment.lastID() + 1 <= 999999999) {
+                                                            if (Appointment.overlapValidator(cmbCustomer.getSelectionModel().getSelectedItem().getCustomer_ID(), StartZone, EndZone, Appointment.lastID()+1)) {
+                                                                Appointment newAppointment = new Appointment(
+                                                                        Appointment.lastID() + 1,
+                                                                        txtTitle.getText(),
+                                                                        txtDescription.getText(),
+                                                                        txtLocation.getText(),
+                                                                        txtType.getText(),
+                                                                        StartZone,
+                                                                        EndZone,
+                                                                        cmbCustomer.getSelectionModel().getSelectedItem().getCustomer_ID(),
+                                                                        cmbUser.getSelectionModel().getSelectedItem().getUser_ID(),
+                                                                        cmbContact.getSelectionModel().getSelectedItem().getContact_ID());
+                                                                Appointment.addAppointment(newAppointment);
+                                                                DBConnect.closeConnection();
+                                                                Stage currentWindow = (Stage) btnCancel.getScene().getWindow();
+                                                                currentWindow.close();
+                                                                } else {
+                                                                    Alert alert = new Alert(Alert.AlertType.ERROR, "Customer already has appointment for that time.");
+                                                                    alert.showAndWait();
+                                                                }
+                                                            } else {
+                                                                Alert alert = new Alert(Alert.AlertType.ERROR, "Appointment ID overflow, cannot create appointment.");
+                                                                alert.showAndWait();
+                                                            }
+                                                        } else {
+                                                            if (Appointment.overlapValidator(cmbCustomer.getSelectionModel().getSelectedItem().getCustomer_ID(), StartZone, EndZone, tempAppointment.getAppointment_ID())) {
+                                                                tempAppointment.setTitle(txtTitle.getText());
+                                                                tempAppointment.setDescription(txtDescription.getText());
+                                                                tempAppointment.setLocation(txtLocation.getText());
+                                                                tempAppointment.setType(txtType.getText());
+                                                                tempAppointment.setStart(ZonedDateTime.ofInstant(LocalDateTime.parse(txtStart.getText(), SetupDatabaseData.timeDateFormat), OffsetDateTime.now().getOffset(), ZoneId.systemDefault()));
+                                                                tempAppointment.setEnd(ZonedDateTime.ofInstant(LocalDateTime.parse(txtEnd.getText(), SetupDatabaseData.timeDateFormat), OffsetDateTime.now().getOffset(), ZoneId.systemDefault()));
+                                                                tempAppointment.setCustomer_ID(cmbCustomer.getSelectionModel().getSelectedItem().getCustomer_ID());
+                                                                tempAppointment.setUser_ID(cmbUser.getSelectionModel().getSelectedItem().getUser_ID());
+                                                                tempAppointment.setContact_ID(cmbContact.getSelectionModel().getSelectedItem().getContact_ID());
+                                                                DBConnect.closeConnection();
+                                                                Stage currentWindow = (Stage) btnCancel.getScene().getWindow();
+                                                                currentWindow.close();
+                                                            } else {
+                                                            Alert alert = new Alert(Alert.AlertType.ERROR, "Customer already has appointment for that time.");
+                                                            alert.showAndWait();
+                                                            }
+                                                        }
                                                 } else {
-                                                        tempAppointment.setTitle(txtTitle.getText());
-                                                        tempAppointment.setDescription(txtDescription.getText());
-                                                        tempAppointment.setLocation(txtLocation.getText());
-                                                        tempAppointment.setType(txtType.getText());
-                                                        tempAppointment.setStart(LocalDateTime.parse(txtStart.getText()));
-                                                        tempAppointment.setEnd(LocalDateTime.parse(txtEnd.getText()));
-                                                        tempAppointment.setCustomer_ID(cmbCustomer.getSelectionModel().getSelectedItem().getCustomer_ID());
-                                                        tempAppointment.setUser_ID(cmbUser.getSelectionModel().getSelectedItem().getUser_ID());
-                                                        tempAppointment.setContact_ID(cmbContact.getSelectionModel().getSelectedItem().getContact_ID());
-                                                    }
-                                                } else {
-                                                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please choose a contact.");
+                                                    Alert alert = new Alert(Alert.AlertType.ERROR, "Appointment must be during service hours (8a-10p est).");
                                                     alert.showAndWait();
                                                 }
                                             } else {
-                                                Alert alert = new Alert(Alert.AlertType.ERROR, "Please choose a user.");
+                                                Alert alert = new Alert(Alert.AlertType.ERROR, "Appointment start time must not be after end time.");
                                                 alert.showAndWait();
                                             }
-                                        } else {
-                                            Alert alert = new Alert(Alert.AlertType.ERROR, "Please choose a customer.");
+                                        }else {
+                                            Alert alert = new Alert(Alert.AlertType.ERROR, "Please choose a contact.");
                                             alert.showAndWait();
                                         }
                                     } else {
-                                        Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid date in the format YYYY-MM-DD HH:MM:SS.");
+                                        Alert alert = new Alert(Alert.AlertType.ERROR, "Please choose a user.");
                                         alert.showAndWait();
                                     }
                                 } else {
-                                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid date in the format YYYY-MM-DD HH:MM:SS.");
+                                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please choose a customer.");
                                     alert.showAndWait();
                                 }
                             } else {
-                                Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid type with less than 50 characters.");
+                                Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid end date in the format YYYY-MM-DD HH:MM:SS.");
                                 alert.showAndWait();
                             }
                         } else {
-                            Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid location with less than 50 characters.");
+                            Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid start date in the format YYYY-MM-DD HH:MM:SS.");
                             alert.showAndWait();
                         }
                     } else {
-                        Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid description with less than 50 characters.");
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid type with less than 50 characters.");
                         alert.showAndWait();
                     }
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid title with less than 50 characters.");
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid location with less than 50 characters.");
                     alert.showAndWait();
                 }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid description with less than 50 characters.");
+                alert.showAndWait();
             }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid title with less than 50 characters.");
+            alert.showAndWait();
+        }
+    }
 
     @FXML
     public void OnCancelButtonClick() {
