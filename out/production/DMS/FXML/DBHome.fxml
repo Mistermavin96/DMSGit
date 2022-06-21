@@ -49,9 +49,9 @@
          <ToggleGroup fx:id="Calendar" />
       </toggleGroup></RadioButton>
     <RadioButton fx:id="rdoMonth" layoutX="576.0" layoutY="376.0" mnemonicParsing="false" onAction="#OnMonthClick" text="Sort by Month" toggleGroup="$Calendar" />
-   <Button layoutX="72.0" layoutY="41.0" mnemonicParsing="false" text="Customers" />
-   <Button layoutX="62.0" layoutY="142.0" mnemonicParsing="false" text="Appointments" />
-   <Button layoutX="76.0" layoutY="243.0" mnemonicParsing="false" text="Schedule" />
+   <Button layoutX="72.0" layoutY="41.0" mnemonicParsing="false" onAction="#OnCountClick" text="Appointment Count" />
+   <Button layoutX="62.0" layoutY="142.0" mnemonicParsing="false" onAction="#OnScheduleClick" text="Schedule by Contact" />
+   <Button layoutX="76.0" layoutY="243.0" mnemonicParsing="false" text="ThirdReport" />
    <Label layoutX="74.0" layoutY="14.0" text="Reporting" />
    <RadioButton fx:id="rdoDefault" layoutX="324.0" layoutY="376.0" mnemonicParsing="false" onAction="#OnDefaultClick" selected="true" text="Default Sort" toggleGroup="$Calendar" />
 </AnchorPane>

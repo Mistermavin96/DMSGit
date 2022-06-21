@@ -9,7 +9,7 @@ public class SetupDatabaseData {
     public static DateTimeFormatter timeDateFormat = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
     public static void setup() {
         DBConnect.openConnection();
-        try (Statement stmt = DBConnect.connection.createStatement()) {
+        try (Statement stmt = DBConnect.getConnection().createStatement()) {
 
             ResultSet userSet = stmt.executeQuery("SELECT * FROM users");
             while (userSet.next()) {

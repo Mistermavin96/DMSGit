@@ -12,7 +12,7 @@ public class DBConnect {
     private static final String driver = "com.mysql.cj.jdbc.Driver";
     private static final String username = "sqlUser";
     private static final String password = "Passw0rd!";
-    public static Connection connection;
+    private static Connection connection;
 
     public static void openConnection() {
         try {
@@ -25,5 +25,9 @@ public class DBConnect {
         try {
             connection.close();
         } catch (Exception e) { System.out.println("Error:" + e.getMessage()); }
+    }
+
+    public static Connection getConnection() {
+        return connection;
     }
 }

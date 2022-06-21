@@ -58,4 +58,18 @@ public class Contact {
         }
         return null;
     }
+
+    public ObservableList<Appointment> getAppointmentsByContact() {
+        int i = 0;
+        ObservableList<Appointment> returnList = FXCollections.observableArrayList();
+        while (i < Appointment.getAllAppointments().size()) {
+            if (Appointment.getAllAppointments().get(i).getContact_ID() == this.getContact_ID()) {
+                returnList.add(Appointment.getAllAppointments().get(i));
+            }
+            i++;
+        }
+
+        return returnList;
+    }
+
 }

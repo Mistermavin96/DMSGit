@@ -99,6 +99,7 @@ public class DBHomeController {
                     alert1.showAndWait();
                 } else {
                     Customer.deleteCustomer(selectedCustomer);
+                    CustomerTable.refresh();
                 }
             } else {
                 Alert alert1 = new Alert(Alert.AlertType.ERROR, "Please select a customer to delete.");
@@ -115,6 +116,7 @@ public class DBHomeController {
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.show();
+            stage.setOnHidden(windowEvent -> CustomerTable.refresh());
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a customer");
             alert.showAndWait();
@@ -128,6 +130,7 @@ public class DBHomeController {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+        stage.setOnHidden(windowEvent -> CustomerTable.refresh());
     }
 
     public void OnDeleteAppointmentClick() {
@@ -139,6 +142,7 @@ public class DBHomeController {
                 Alert alert1 = new Alert(Alert.AlertType.INFORMATION, "Appointment ID " + AppointmentTable.getSelectionModel().getSelectedItem().getAppointment_ID() + " has been deleted, of type " + AppointmentTable.getSelectionModel().getSelectedItem().getType() + ".");
                 alert1.showAndWait();
                 Appointment.deleteAppointment(AppointmentTable.getSelectionModel().getSelectedItem());
+                AppointmentTable.refresh();
             } else {
                 Alert alert1 = new Alert(Alert.AlertType.ERROR, "Please select an appointment to delete");
                 alert1.showAndWait();
@@ -154,6 +158,7 @@ public class DBHomeController {
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.show();
+            stage.setOnHidden(windowEvent -> AppointmentTable.refresh());
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an appointment");
             alert.showAndWait();
@@ -163,6 +168,23 @@ public class DBHomeController {
     public void onAddAppointmentClick() throws IOException {
         AppointmentController.tempAppointment = null;
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("../FXML/Appointment.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+        stage.setOnHidden(windowEvent -> AppointmentTable.refresh());
+    }
+
+    public void OnScheduleClick() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("../FXML/ScheduleReporting.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void OnCountClick() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("../FXML/CountReporting.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
         stage.setScene(scene);

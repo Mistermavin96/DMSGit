@@ -52,7 +52,7 @@ public class CustomerController {
                                             txtPhoneNumber.getText()
                                     );
                                     Customer.addCustomer(newCustomer);
-                                    DBConnect.closeConnection();
+                                    PreparedStatements.AddCustomer(newCustomer);
                                     Stage currentWindow = (Stage) btnCancel.getScene().getWindow();
                                     currentWindow.close();
                                 } else {
@@ -65,7 +65,6 @@ public class CustomerController {
                                 tempCustomer.setCustomer_Name(txtCustomerName.getText());
                                 tempCustomer.setPhone(txtPhoneNumber.getText());
                                 tempCustomer.setPostal_Code(txtPostalCode.getText());
-                                DBConnect.closeConnection();
                                 Stage currentWindow = (Stage) btnCancel.getScene().getWindow();
                                 currentWindow.close();
                             }
