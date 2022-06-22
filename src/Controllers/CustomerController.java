@@ -1,6 +1,6 @@
 package Controllers;
 
-import ClassesAndFunctions.*;
+import Classes.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -65,6 +65,7 @@ public class CustomerController {
                                 tempCustomer.setCustomer_Name(txtCustomerName.getText());
                                 tempCustomer.setPhone(txtPhoneNumber.getText());
                                 tempCustomer.setPostal_Code(txtPostalCode.getText());
+                                PreparedStatements.ModifyCustomer(tempCustomer);
                                 Stage currentWindow = (Stage) btnCancel.getScene().getWindow();
                                 currentWindow.close();
                             }

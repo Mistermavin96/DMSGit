@@ -1,8 +1,11 @@
 package Controllers;
 
-import ClassesAndFunctions.Appointment;
-import ClassesAndFunctions.Customer;
+import Classes.Appointment;
+import Classes.Customer;
+import Classes.PreparedStatements;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +14,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.*;
 
 import java.io.IOException;
+import java.time.Month;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
@@ -38,7 +43,10 @@ public class DBHomeController {
         @FXML TableColumn<Customer, String> C_Country;
         @FXML TableColumn<Customer, String> C_Division;
 
-    @FXML private void initialize() {
+        @FXML ComboBox<Month> cmbMonth;
+        @FXML ComboBox<Integer> cmbWeek;
+
+    @FXML public void initialize() {
         ObservableList<Customer> CustomerList = Customer.getAllCustomers();
         ObservableList<Appointment> AppointmentList = Appointment.getAllAppointments();
         int i = 0;
@@ -73,18 +81,35 @@ public class DBHomeController {
             A_Type.setCellValueFactory(new PropertyValueFactory<>("Type"));
             A_StartDate.setCellValueFactory(new PropertyValueFactory<>("StartString"));
             A_EndDate.setCellValueFactory(new PropertyValueFactory<>("EndString"));
-            A_Customer_ID.setCellValueFactory(new PropertyValueFactory<>("Customer_Name"));
-            A_User_ID.setCellValueFactory(new PropertyValueFactory<>("User_Name"));
+            A_Customer_ID.setCellValueFactory(new PropertyValueFactory<>("Customer_ID"));
+            A_User_ID.setCellValueFactory(new PropertyValueFactory<>("User_ID"));
             A_Contact.setCellValueFactory(new PropertyValueFactory<>("Contact_Name"));
+            ObservableList<Month> MonthList = FXCollections.observableArrayList();
+            MonthList.addAll(Month.values());
+            ObservableList<Integer> WeekArray = FXCollections.observableArrayList();
+            int c = 1;
+            while (c < 53) {
+                WeekArray.add(c);
+                c++;
+            }
+            cmbMonth.setItems(MonthList);
+            cmbWeek.setItems(WeekArray);
     }
 
-    public void OnWeekClick() {
+    public void OnWeekChoice() {
+        AppointmentTable.setItems(Appointment.getAllAppointments().filtered(t -> t.getStart().get(ChronoField.ALIGNED_WEEK_OF_YEAR) == cmbWeek.getSelectionModel().getSelectedItem()));
+        cmbMonth.setValue(null);
     }
 
-    public void OnMonthClick() {
+    public void OnMonthChoice() {
+        AppointmentTable.setItems(Appointment.getAllAppointments().filtered(t -> t.getStart().getMonth() == cmbMonth.getValue()));
+        cmbWeek.setValue(null);
     }
 
-    public void OnDefaultClick() {
+    public void OnDefaultChoice() {
+        AppointmentTable.setItems(Appointment.getAllAppointments().filtered(t -> true));
+        cmbWeek.setValue(null);
+        cmbMonth.setValue(null);
     }
 
     public void onDeleteCustomerClick() {
@@ -98,6 +123,7 @@ public class DBHomeController {
                     Alert alert1 = new Alert(Alert.AlertType.ERROR, "Please delete any appointments associated with this customer first.");
                     alert1.showAndWait();
                 } else {
+                    PreparedStatements.DeleteCustomer(CustomerTable.getSelectionModel().getSelectedItem());
                     Customer.deleteCustomer(selectedCustomer);
                     CustomerTable.refresh();
                 }
@@ -139,6 +165,7 @@ public class DBHomeController {
 
         if (confirmation.get() == ButtonType.OK) {
             if (AppointmentTable.getSelectionModel().getSelectedItem() != null) {
+                PreparedStatements.DeleteAppointment(AppointmentTable.getSelectionModel().getSelectedItem());
                 Alert alert1 = new Alert(Alert.AlertType.INFORMATION, "Appointment ID " + AppointmentTable.getSelectionModel().getSelectedItem().getAppointment_ID() + " has been deleted, of type " + AppointmentTable.getSelectionModel().getSelectedItem().getType() + ".");
                 alert1.showAndWait();
                 Appointment.deleteAppointment(AppointmentTable.getSelectionModel().getSelectedItem());
@@ -191,4 +218,8 @@ public class DBHomeController {
         stage.show();
     }
 
+    public void OnTotalsClick() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "The current number of customers is " + Customer.getAllCustomers().size() + " and the current number of appointments is " + Appointment.getAllAppointments().size());
+        alert.showAndWait();
+    }
 }

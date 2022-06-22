@@ -25,5 +25,5 @@ To produce a report, please click the report wanted in the dropdown menu.
 Report types available:
 Total number of apppointments by type and month
 Schedule for each contact in the database
-Total number of customers
+Total number of customers and appointments
 

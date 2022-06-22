@@ -1,7 +1,7 @@
 package Controllers;
 
-import ClassesAndFunctions.DBConnect;
-import ClassesAndFunctions.User;
+import Classes.DBConnect;
+import Classes.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -1,4 +1,4 @@
-package ClassesAndFunctions;
+package Classes;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 public class SetupDatabaseData {
     public static DateTimeFormatter timeDateFormat = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
+    public static DateTimeFormatter toStringFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss").withZone(ZoneId.of("UTC"));
     public static void setup() {
         DBConnect.openConnection();
         try (Statement stmt = DBConnect.getConnection().createStatement()) {

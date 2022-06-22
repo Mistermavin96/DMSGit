@@ -1,7 +1,7 @@
 package Controllers;
 
-import ClassesAndFunctions.Appointment;
-import ClassesAndFunctions.Contact;
+import Classes.Appointment;
+import Classes.Contact;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.fxml.FXML;

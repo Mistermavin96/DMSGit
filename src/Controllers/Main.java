@@ -1,6 +1,6 @@
 package Controllers;
 
-import ClassesAndFunctions.SetupDatabaseData;
+import Classes.SetupDatabaseData;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

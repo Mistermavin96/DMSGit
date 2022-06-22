@@ -1,6 +1,6 @@
 package Controllers;
 
-import ClassesAndFunctions.*;
+import Classes.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.regex.Pattern;
 
 public class AppointmentController {
 
@@ -75,7 +74,7 @@ public class AppointmentController {
                                                                         cmbUser.getSelectionModel().getSelectedItem().getUser_ID(),
                                                                         cmbContact.getSelectionModel().getSelectedItem().getContact_ID());
                                                                 Appointment.addAppointment(newAppointment);
-                                                                DBConnect.closeConnection();
+                                                                PreparedStatements.AddAppointment(newAppointment);
                                                                 Stage currentWindow = (Stage) btnCancel.getScene().getWindow();
                                                                 currentWindow.close();
                                                                 } else {
@@ -97,7 +96,7 @@ public class AppointmentController {
                                                                 tempAppointment.setCustomer_ID(cmbCustomer.getSelectionModel().getSelectedItem().getCustomer_ID());
                                                                 tempAppointment.setUser_ID(cmbUser.getSelectionModel().getSelectedItem().getUser_ID());
                                                                 tempAppointment.setContact_ID(cmbContact.getSelectionModel().getSelectedItem().getContact_ID());
-                                                                DBConnect.closeConnection();
+                                                                PreparedStatements.ModifyAppointment(tempAppointment);
                                                                 Stage currentWindow = (Stage) btnCancel.getScene().getWindow();
                                                                 currentWindow.close();
                                                             } else {
