@@ -85,5 +85,6 @@ public class SetupDatabaseData {
             System.out.println(e);
         }
         DBConnect.closeConnection();
+        Total.setAllTotals();
     }
 }

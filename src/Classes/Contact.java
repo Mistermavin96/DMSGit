@@ -49,26 +49,21 @@ public class Contact {
     }
 
     public static Contact getContactByID(int ContactID) {
-        int i = 0;
-        while (i < getAllContacts().size()) {
+        for (int i = 0; i < getAllContacts().size(); i++) {
             if (getAllContacts().get(i).Contact_ID == ContactID) {
                 return getAllContacts().get(i);
             }
-            i++;
         }
         return null;
     }
 
     public ObservableList<Appointment> getAppointmentsByContact() {
-        int i = 0;
         ObservableList<Appointment> returnList = FXCollections.observableArrayList();
-        while (i < Appointment.getAllAppointments().size()) {
+        for (int i = 0; i < Appointment.getAllAppointments().size(); i++) {
             if (Appointment.getAllAppointments().get(i).getContact_ID() == this.getContact_ID()) {
                 returnList.add(Appointment.getAllAppointments().get(i));
             }
-            i++;
         }
-
         return returnList;
     }
 

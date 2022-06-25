@@ -74,6 +74,7 @@ public class AppointmentController {
                                                                         cmbUser.getSelectionModel().getSelectedItem().getUser_ID(),
                                                                         cmbContact.getSelectionModel().getSelectedItem().getContact_ID());
                                                                 Appointment.addAppointment(newAppointment);
+                                                                Total.AddOrRemoveAppointment(newAppointment, false);
                                                                 PreparedStatements.AddAppointment(newAppointment);
                                                                 Stage currentWindow = (Stage) btnCancel.getScene().getWindow();
                                                                 currentWindow.close();
@@ -87,6 +88,9 @@ public class AppointmentController {
                                                             }
                                                         } else {
                                                             if (Appointment.overlapValidator(cmbCustomer.getSelectionModel().getSelectedItem().getCustomer_ID(), StartZone, EndZone, tempAppointment.getAppointment_ID())) {
+                                                                Total.ModifyAppointment(tempAppointment,
+                                                                        (ZonedDateTime.ofInstant(LocalDateTime.parse(txtStart.getText(), SetupDatabaseData.timeDateFormat), OffsetDateTime.now().getOffset(), ZoneId.systemDefault())).getMonth(),
+                                                                        txtType.getText());
                                                                 tempAppointment.setTitle(txtTitle.getText());
                                                                 tempAppointment.setDescription(txtDescription.getText());
                                                                 tempAppointment.setLocation(txtLocation.getText());

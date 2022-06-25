@@ -5,6 +5,8 @@ import javafx.collections.ObservableList;
 
 import java.time.*;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -165,33 +167,25 @@ public class Appointment {
     }
 
     public static int lastID() {
-        int i = 0;
         int MaxID = 0;
-        while (i < allAppointments.size()) {
-            MaxID = allAppointments.get(i).getAppointment_ID();
-            i++;
-        }
+        for (Appointment allAppointment : allAppointments) { MaxID = allAppointment.getAppointment_ID(); }
         return MaxID;
     }
 
     public static Customer getCustomerByID(int ID) {
-        int i = 0;
-        while (i < Customer.getAllCustomers().size()) {
+        for (int i = 0; i < Customer.getAllCustomers().size(); i++) {
             if (Customer.getAllCustomers().get(i).getCustomer_ID() == ID) {
                 return Customer.getAllCustomers().get(i);
             }
-            i++;
         }
         return null;
     }
 
     public static User getUserByID(int ID) {
-        int i = 0;
-        while (i < User.getAllUsers().size()) {
+        for (int i = 0; i < User.getAllUsers().size(); i++) {
             if (User.getAllUsers().get(i).getUser_ID() == ID) {
                 return User.getAllUsers().get(i);
             }
-            i++;
         }
         return null;
     }
@@ -216,8 +210,7 @@ public class Appointment {
     }
 
     public static boolean overlapValidator(int CustomerID, ZonedDateTime startTime, ZonedDateTime endTime, int AppointmentID) {
-        int i = 0;
-        while (i < Appointment.getAllAppointments().size()) {
+        for (int i = 0; i < Appointment.getAllAppointments().size(); i++) {
             if (CustomerID == Appointment.getAllAppointments().get(i).Customer_ID && AppointmentID != Appointment.getAllAppointments().get(i).getAppointment_ID()) {
                 if (!(startTime.isAfter(Appointment.getAllAppointments().get(i).End) ||
                         endTime.isBefore(Appointment.getAllAppointments().get(i).Start) ||
@@ -226,7 +219,6 @@ public class Appointment {
                     return false;
                 }
             }
-            i++;
         }
         return true;
     }

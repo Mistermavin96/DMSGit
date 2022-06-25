@@ -3,6 +3,7 @@ package Controllers;
 import Classes.Appointment;
 import Classes.Customer;
 import Classes.PreparedStatements;
+import Classes.Total;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -166,6 +167,7 @@ public class DBHomeController {
         if (confirmation.get() == ButtonType.OK) {
             if (AppointmentTable.getSelectionModel().getSelectedItem() != null) {
                 PreparedStatements.DeleteAppointment(AppointmentTable.getSelectionModel().getSelectedItem());
+                Total.AddOrRemoveAppointment(AppointmentTable.getSelectionModel().getSelectedItem(), true);
                 Alert alert1 = new Alert(Alert.AlertType.INFORMATION, "Appointment ID " + AppointmentTable.getSelectionModel().getSelectedItem().getAppointment_ID() + " has been deleted, of type " + AppointmentTable.getSelectionModel().getSelectedItem().getType() + ".");
                 alert1.showAndWait();
                 Appointment.deleteAppointment(AppointmentTable.getSelectionModel().getSelectedItem());

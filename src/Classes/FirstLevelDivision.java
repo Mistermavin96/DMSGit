@@ -55,24 +55,20 @@ public class FirstLevelDivision {
     }
 
     public static FirstLevelDivision getDivisionbyDivisionID(int DivID) {
-        int i = 0;
-        while (i < getAllFirstLevelDivisions().size()) {
+        for (int i = 0; i < getAllFirstLevelDivisions().size(); i++) {
             if (getAllFirstLevelDivisions().get(i).Division_ID == DivID) {
                 return getAllFirstLevelDivisions().get(i);
             }
-            i++;
         }
         return null;
     }
 
     public static Country getCountryByDivisionId(int DivID) {
-        int i = 0;
         int CountryID = 0;
-        while (i < getAllFirstLevelDivisions().size()) {
+        for (int i = 0; i < getAllFirstLevelDivisions().size(); i++) {
             if (getAllFirstLevelDivisions().get(i).Division_ID == DivID) {
-                 CountryID = getAllFirstLevelDivisions().get(i).Country_ID;
+                CountryID = getAllFirstLevelDivisions().get(i).Country_ID;
             }
-            i++;
         }
         return Country.getAllCountries().get(CountryID-1);
     }

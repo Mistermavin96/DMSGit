@@ -48,12 +48,10 @@ public class User {
     }
 
     public static boolean loginCheck(String user, String pass) {
-        int i = 0;
-        while (i < getAllUsers().size()) {
+        for (int i = 0; i < getAllUsers().size(); i++) {
             if (getAllUsers().get(i).Username.equals(user) && getAllUsers().get(i).Password.equals(pass)) {
                 return true;
             }
-            i++;
         }
         return false;
     }

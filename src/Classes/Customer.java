@@ -109,22 +109,18 @@ public class Customer {
     }
 
     public boolean hasAppointments(int customer_ID) {
-        int i = 0;
-        while (i < Appointment.getAllAppointments().size()) {
+        for (int i = 0; i < Appointment.getAllAppointments().size(); i++) {
             if (customer_ID == Appointment.getAllAppointments().get(i).getCustomer_ID()) {
                 return true;
             }
-            i++;
         }
         return false;
     }
 
     public static int lastID() {
-        int i = 0;
         int MaxID = 0;
-        while (i < allCustomers.size()) {
-            MaxID = allCustomers.get(i).getCustomer_ID();
-            i++;
+        for (Customer allCustomer : allCustomers) {
+            MaxID = allCustomer.getCustomer_ID();
         }
         return MaxID;
     }
