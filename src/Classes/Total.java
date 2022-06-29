@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import java.time.Month;
 import java.time.ZonedDateTime;
 import java.time.format.TextStyle;
+import java.util.ConcurrentModificationException;
 import java.util.Locale;
 
 public class Total {
@@ -23,25 +24,35 @@ public class Total {
     }
 
     public static void ModifyAppointment(Appointment tempAppointment, Month newMonth, String newType) {
-        boolean isInList = false;
-        for (Total y : allTotals) {
-            if (y.Month == tempAppointment.getStart().getMonth() && y.Type.equals(tempAppointment.getType())) {
-                y.Total -= 1;
-                isInList = true;
-                if (y.Total == 0) {
-                    allTotals.remove(y);
-                    isInList = false;
+        if (!(newMonth == tempAppointment.getStart().getMonth() && newType.equals(tempAppointment.getType()))) {
+            boolean isInList = false;
+            Total toBeRemoved = null;
+
+            for (Total y : allTotals) {
+                if (y.Month == tempAppointment.getStart().getMonth() && y.Type.equals(tempAppointment.getType())) {
+                    y.Total -= 1;
+                    if (y.Total == 0) {
+                        toBeRemoved = y;
+                    }
                 }
             }
-            if (y.Month == newMonth && y.Type.equals(newType)) {
-                y.Total += 1;
-                isInList = true;
+
+            if (toBeRemoved != null) {
+                allTotals.remove(toBeRemoved);
             }
-        }
-        if (!isInList) {
-            Total newTotal = new Total(newMonth, newType);
-            newTotal.Total = 1;
-            allTotals.add(newTotal);
+
+            for (Total y : allTotals) {
+                if (y.Month == newMonth && y.Type.equals(newType)) {
+                    y.Total += 1;
+                    isInList = true;
+                }
+            }
+
+            if (!isInList) {
+                Total newTotal = new Total(newMonth, newType);
+                newTotal.Total += 1;
+                allTotals.add(newTotal);
+            }
         }
     }
 

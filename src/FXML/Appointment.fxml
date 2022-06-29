@@ -6,27 +6,29 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="338.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AppointmentController">
-   <children>
-      <Label layoutX="154.0" layoutY="6.0" text="Add Appointment" />
-      <Label layoutX="14.0" layoutY="31.0" text="Appointment ID" />
-      <Label layoutX="14.0" layoutY="59.0" text="Title" />
-      <Label layoutX="14.0" layoutY="119.0" text="Location" />
-      <Label layoutX="13.0" layoutY="149.0" text="Type" />
-      <Label layoutX="14.0" layoutY="87.0" text="Description" />
-      <Label layoutX="12.0" layoutY="176.0" text="Start Date &amp; Time" />
-      <Label layoutX="15.0" layoutY="213.0" text="End Date &amp; Time" />
-      <ComboBox fx:id="cmbContact" layoutX="127.0" layoutY="299.0" prefWidth="150.0" promptText="Contact" />
-      <TextField fx:id="txtType" layoutX="127.0" layoutY="145.0" />
-      <TextField fx:id="txtLocation" layoutX="127.0" layoutY="115.0" />
-      <TextField fx:id="txtDescription" layoutX="127.0" layoutY="83.0" />
-      <TextField fx:id="txtTitle" layoutX="127.0" layoutY="55.0" />
-      <TextField fx:id="txtAppointmentID" disable="true" editable="false" layoutX="127.0" layoutY="27.0" text="Disabled - Auto Gen" />
-      <Button fx:id="btnSubmit" layoutX="296.0" layoutY="262.0" mnemonicParsing="false" onAction="#OnSubmitButtonClick" text="Submit" />
-      <Button fx:id="btnCancel" layoutX="296.0" layoutY="299.0" mnemonicParsing="false" onAction="#OnCancelButtonClick" text="Cancel" />
-      <ComboBox fx:id="cmbUser" layoutX="127.0" layoutY="244.0" prefWidth="150.0" promptText="User" />
-      <ComboBox fx:id="cmbCustomer" layoutX="127.0" layoutY="271.0" prefWidth="150.0" promptText="Customer" />
-      <TextField fx:id="txtStart" layoutX="127.0" layoutY="172.0" promptText="YYYY-MM-DD HH:MM:SS" />
-      <TextField fx:id="txtEnd" layoutX="128.0" layoutY="209.0" promptText="YYYY-MM-DD HH:MM:SS" />
-   </children>
+<AnchorPane prefHeight="338.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controllers.AppointmentController">
+   <Label layoutX="154.0" layoutY="6.0" text="Add Appointment"/>
+   <Label layoutX="14.0" layoutY="31.0" text="Appointment ID"/>
+   <Label layoutX="14.0" layoutY="59.0" text="Title"/>
+   <Label layoutX="14.0" layoutY="119.0" text="Location"/>
+   <Label layoutX="13.0" layoutY="149.0" text="Type"/>
+   <Label layoutX="14.0" layoutY="87.0" text="Description"/>
+   <Label layoutX="12.0" layoutY="176.0" text="Start Date &amp; Time"/>
+   <Label layoutX="15.0" layoutY="213.0" text="End Date &amp; Time"/>
+   <TextField fx:id="txtAppointmentID" disable="true" editable="false" layoutX="127.0" layoutY="27.0"
+              text="Disabled - Auto Gen"/>
+   <TextField fx:id="txtTitle" layoutX="127.0" layoutY="55.0"/>
+   <TextField fx:id="txtDescription" layoutX="127.0" layoutY="83.0"/>
+   <TextField fx:id="txtLocation" layoutX="127.0" layoutY="115.0"/>
+   <TextField fx:id="txtType" layoutX="127.0" layoutY="145.0"/>
+   <TextField fx:id="txtStart" layoutX="127.0" layoutY="172.0" promptText="YYYY-MM-DD HH:MM:SS"/>
+   <TextField fx:id="txtEnd" layoutX="128.0" layoutY="209.0" promptText="YYYY-MM-DD HH:MM:SS"/>
+   <ComboBox fx:id="cmbUser" layoutX="127.0" layoutY="244.0" prefWidth="150.0" promptText="User"/>
+   <ComboBox fx:id="cmbCustomer" layoutX="127.0" layoutY="271.0" prefWidth="150.0" promptText="Customer"/>
+   <ComboBox fx:id="cmbContact" layoutX="127.0" layoutY="299.0" prefWidth="150.0" promptText="Contact"/>
+   <Button fx:id="btnSubmit" layoutX="296.0" layoutY="262.0" mnemonicParsing="false" onAction="#OnSubmitButtonClick"
+           text="Submit"/>
+   <Button fx:id="btnCancel" layoutX="296.0" layoutY="299.0" mnemonicParsing="false" onAction="#OnCancelButtonClick"
+           text="Cancel"/>
 </AnchorPane>

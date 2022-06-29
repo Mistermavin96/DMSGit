@@ -8,15 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.DBHomeController">
-    <Button layoutX="50.0" layoutY="641.0" onAction="#onAddAppointmentClick" text="Add" />
-    <Button layoutX="340.0" layoutY="641.0" mnemonicParsing="false" onAction="#OnUpdateAppointmentClick" text="Update" />
-    <Button layoutX="625.0" layoutY="641.0" mnemonicParsing="false" onAction="#OnDeleteAppointmentClick" text="Delete" />
-    <Button layoutX="228.0" layoutY="281.0" onAction="#onAddCustomerClick" text="Add" />
-    <Button layoutX="400.0" layoutY="281.0" mnemonicParsing="false" onAction="#onUpdateCustomerClick" text="Update" />
-    <Button layoutX="600.0" layoutY="281.0" mnemonicParsing="false" onAction="#onDeleteCustomerClick" text="Delete" />
-
-    <Label layoutX="410.0" layoutY="14.0" style="-fx-font-weight: bold;" text="Customers" />
-    <Label layoutX="326.0" layoutY="344.0" style="-fx-font-weight: bold;" text="Appointments" />
+    <Button layoutX="40.0" layoutY="41.0" mnemonicParsing="false" onAction="#OnCountClick" text="Appointment Count" />
+    <Button layoutX="38.0" layoutY="142.0" mnemonicParsing="false" onAction="#OnScheduleClick" text="Schedule by Contact" />
+    <Button layoutX="76.0" layoutY="243.0" mnemonicParsing="false" onAction="#OnTotalsClick" text="Totals" />
 
     <TableView fx:id="CustomerTable" layoutX="191.0" layoutY="41.0" prefHeight="227.0" prefWidth="497.0">
         <columns>
@@ -24,10 +18,18 @@
             <TableColumn fx:id="C_Name" minWidth="0.0" prefWidth="99.0" text="Customer Name" />
             <TableColumn fx:id="C_Number" prefWidth="95.0" text="Phone Number" />
             <TableColumn fx:id="C_Address" prefWidth="71.0" text="Address" />
-         <TableColumn fx:id="C_Country" prefWidth="75.0" text="Country" />
-         <TableColumn fx:id="C_Division" prefWidth="75.0" text="Division" />
+            <TableColumn fx:id="C_Country" prefWidth="75.0" text="Country" />
+            <TableColumn fx:id="C_Division" prefWidth="75.0" text="Division" />
         </columns>
     </TableView>
+
+    <Button layoutX="228.0" layoutY="281.0" onAction="#onAddCustomerClick" text="Add" />
+    <Button layoutX="400.0" layoutY="281.0" mnemonicParsing="false" onAction="#onUpdateCustomerClick" text="Update" />
+    <Button layoutX="600.0" layoutY="281.0" mnemonicParsing="false" onAction="#onDeleteCustomerClick" text="Delete" />
+
+    <ComboBox fx:id="cmbMonth" layoutX="41.0" layoutY="370.0" onAction="#OnMonthChoice" prefWidth="150.0" />
+    <Button layoutX="319.0" layoutY="370.0" mnemonicParsing="false" onAction="#OnDefaultChoice" text="Default Sorting" />
+    <ComboBox fx:id="cmbWeek" layoutX="551.0" layoutY="370.0" onAction="#OnWeekChoice" prefWidth="150.0" />
 
     <TableView fx:id="AppointmentTable" layoutX="8.0" layoutY="403.0" prefHeight="227.0" prefWidth="717.0" AnchorPane.topAnchor="403.0">
         <columns>
@@ -43,13 +45,15 @@
             <TableColumn fx:id="A_Contact" prefWidth="52.0" text="Contact" />
         </columns>
     </TableView>
-   <Button layoutX="40.0" layoutY="41.0" mnemonicParsing="false" onAction="#OnCountClick" text="Appointment Count" />
-   <Button layoutX="38.0" layoutY="142.0" mnemonicParsing="false" onAction="#OnScheduleClick" text="Schedule by Contact" />
-   <Button layoutX="76.0" layoutY="243.0" mnemonicParsing="false" onAction="#OnTotalsClick" text="Totals" />
+
+    <Button layoutX="50.0" layoutY="641.0" onAction="#onAddAppointmentClick" text="Add" />
+    <Button layoutX="340.0" layoutY="641.0" mnemonicParsing="false" onAction="#OnUpdateAppointmentClick" text="Update" />
+    <Button layoutX="625.0" layoutY="641.0" mnemonicParsing="false" onAction="#OnDeleteAppointmentClick" text="Delete" />
+
+    <Label layoutX="410.0" layoutY="14.0" style="-fx-font-weight: bold;" text="Customers" />
+    <Label layoutX="326.0" layoutY="344.0" style="-fx-font-weight: bold;" text="Appointments" />
+
    <Label layoutX="74.0" layoutY="14.0" text="Reporting" />
-   <Button layoutX="319.0" layoutY="370.0" mnemonicParsing="false" onAction="#OnDefaultChoice" text="Default Sorting" />
-   <ComboBox fx:id="cmbMonth" layoutX="41.0" layoutY="370.0" onAction="#OnMonthChoice" prefWidth="150.0" />
-   <ComboBox fx:id="cmbWeek" layoutX="551.0" layoutY="370.0" onAction="#OnWeekChoice" prefWidth="150.0" />
    <Label layoutX="74.0" layoutY="344.0" text="Sort By Month" />
    <Label layoutX="591.0" layoutY="344.0" text="Sort by Week" />
 </AnchorPane>

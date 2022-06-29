@@ -5,12 +5,14 @@ import javafx.collections.ObservableList;
 
 import java.time.*;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
+/**
+ * This class creates the Appointment object which is used to track appointments.
+ *
+ */
 public class Appointment {
     private int Appointment_ID;
     private String Title;
@@ -29,6 +31,20 @@ public class Appointment {
     private String EndString;
     private static final ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
+
+    /**
+     * This is the Constructor for the Object.
+     * @param Appointment_ID
+     * @param Title
+     * @param Description
+     * @param Location
+     * @param Type
+     * @param Start
+     * @param End
+     * @param Customer_ID
+     * @param User_ID
+     * @param Contact_ID
+     */
     public Appointment(int Appointment_ID, String Title, String Description, String Location, String Type, ZonedDateTime Start, ZonedDateTime End, int Customer_ID, int User_ID, int Contact_ID) {
         this.Appointment_ID = Appointment_ID;
         this.Title = Title;
