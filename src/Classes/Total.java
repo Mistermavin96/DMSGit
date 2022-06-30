@@ -4,9 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.Month;
-import java.time.ZonedDateTime;
 import java.time.format.TextStyle;
-import java.util.ConcurrentModificationException;
 import java.util.Locale;
 
 public class Total {
@@ -97,9 +95,6 @@ public class Total {
                     allTotal.Total += 1;
                 }
             }
-        }
-        for (Classes.Total allTotal : allTotals) {
-            System.out.println(allTotal.Month + ", " + allTotal.Type + ", " + allTotal.Total);
         }
     }
 

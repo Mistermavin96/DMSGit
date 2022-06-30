@@ -4,7 +4,7 @@ Program Purpose: Schedule appointments with customers and manage customer data
 Author: Kavin Eberle
 Email: keberl2@wgu.edu
 
-Current Application Version: 0.1.3
+Current Application Version: 1.0.2
 Version Date: 6/9/2022
 IDE Version: IntelliJ IDEA Community Edition 2021.1.3 x64
 JDK Version: Java SE 17.0.1
@@ -19,8 +19,8 @@ To delete a customer, click the customer to be deleted, then click the delete bu
 To add an appointment, click the add button under the appointment list. Once done, click submit.
 To update an appointment, click the appointment to be updated, then click the update button under the appointment list. Once done, click submit.
 To delete an appointment, click the appointment to be deleted, then click the delete button under the appointment list, and confirm your decision.
-Appointments can be viewed by week or month by clicking the appropriate sort button above the appointments list.
-To produce a report, please click the report wanted in the dropdown menu.
+Appointments can be viewed by week or month by clicking the appropriate filter button above the appointments list.
+To produce a report, please click the report wanted from the list.
 
 Report types available:
 Total number of apppointments by type and month

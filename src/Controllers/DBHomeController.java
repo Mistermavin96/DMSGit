@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.*;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoField;
@@ -43,9 +44,6 @@ public class DBHomeController {
         @FXML TableColumn<Customer, String> C_Address;
         @FXML TableColumn<Customer, String> C_Country;
         @FXML TableColumn<Customer, String> C_Division;
-
-        @FXML ComboBox<Month> cmbMonth;
-        @FXML ComboBox<Integer> cmbWeek;
 
     @FXML public void initialize() {
         ObservableList<Customer> CustomerList = Customer.getAllCustomers();
@@ -93,24 +91,6 @@ public class DBHomeController {
                 WeekArray.add(c);
                 c++;
             }
-            cmbMonth.setItems(MonthList);
-            cmbWeek.setItems(WeekArray);
-    }
-
-    public void OnWeekChoice() {
-        AppointmentTable.setItems(Appointment.getAllAppointments().filtered(t -> t.getStart().get(ChronoField.ALIGNED_WEEK_OF_YEAR) == cmbWeek.getSelectionModel().getSelectedItem()));
-        cmbMonth.setValue(null);
-    }
-
-    public void OnMonthChoice() {
-        AppointmentTable.setItems(Appointment.getAllAppointments().filtered(t -> t.getStart().getMonth() == cmbMonth.getValue()));
-        cmbWeek.setValue(null);
-    }
-
-    public void OnDefaultChoice() {
-        AppointmentTable.setItems(Appointment.getAllAppointments().filtered(t -> true));
-        cmbWeek.setValue(null);
-        cmbMonth.setValue(null);
     }
 
     public void onDeleteCustomerClick() {
@@ -223,5 +203,18 @@ public class DBHomeController {
     public void OnTotalsClick() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "The current number of customers is " + Customer.getAllCustomers().size() + " and the current number of appointments is " + Appointment.getAllAppointments().size());
         alert.showAndWait();
+    }
+
+    public void onByMonthClick() {
+        AppointmentTable.setItems(Appointment.getAllAppointments().filtered(t -> t.getStart().getMonth() == LocalDateTime.now().getMonth() && t.getStart().getYear() == LocalDateTime.now().getYear()));
+    }
+
+
+    public void OnDefaultClick() {
+        AppointmentTable.setItems(Appointment.getAllAppointments().filtered(t -> true));
+    }
+
+    public void onByWeekClick() {
+        AppointmentTable.setItems(Appointment.getAllAppointments().filtered(t -> t.getStart().get(ChronoField.ALIGNED_WEEK_OF_YEAR) == LocalDateTime.now().get(ChronoField.ALIGNED_WEEK_OF_YEAR) && t.getStart().getYear() == LocalDateTime.now().getYear()));
     }
 }
