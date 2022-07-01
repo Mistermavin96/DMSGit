@@ -5,11 +5,18 @@ import java.sql.SQLException;
 import java.time.Instant;
 import java.time.ZoneId;
 
+/**
+ * This class has all prepared statements used to modify the database.
+ */
 public class PreparedStatements {
 
     static PreparedStatement preparedStatement;
 
-    public static boolean AddCustomer(Customer newCustomer) {
+    /**
+     * This method adds a Customer entry to the database.
+     * @param newCustomer The Customer to be added.
+     */
+    public static void AddCustomer(Customer newCustomer) {
         try {
             DBConnect.openConnection();
             String query = "INSERT INTO Customers VALUES(?,?,?,?,?,?,?,?,?,?)";
@@ -29,12 +36,14 @@ public class PreparedStatements {
         } catch(SQLException e) {
             System.out.println(e);
             DBConnect.closeConnection();
-            return false;
         }
-        return true;
     }
 
-    public static boolean ModifyCustomer(Customer modCustomer) {
+    /**
+     * This method modifies a Customer entry already in the database.
+     * @param modCustomer The Customer with information to be set in the database.
+     */
+    public static void ModifyCustomer(Customer modCustomer) {
         try {
             DBConnect.openConnection();
             String query = "UPDATE Customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Last_Update = ?, Last_Updated_By = ?, Division_ID = ? WHERE Customer_ID = ?";
@@ -52,12 +61,14 @@ public class PreparedStatements {
         } catch (SQLException e){
             System.out.println(e);
             DBConnect.closeConnection();
-            return false;
         }
-        return true;
     }
 
-    public static boolean DeleteCustomer(Customer delCustomer) {
+    /**
+     * This method deletes a Customer entry in a database.
+     * @param delCustomer The Customer to be deleted.
+     */
+    public static void DeleteCustomer(Customer delCustomer) {
         try {
             DBConnect.openConnection();
             String query = "DELETE FROM Customers WHERE Customer_ID = ?";
@@ -68,12 +79,14 @@ public class PreparedStatements {
         } catch(SQLException e) {
             System.out.println(e);
             DBConnect.closeConnection();
-            return false;
         }
-        return true;
     }
 
-    public static boolean AddAppointment(Appointment newAppointment) {
+    /**
+     * This method adds an Appointment entry to the database.
+     * @param newAppointment The Appointment to be added to the database.
+     */
+    public static void AddAppointment(Appointment newAppointment) {
         try {
             DBConnect.openConnection();
             String query = "INSERT INTO Appointments VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -97,12 +110,14 @@ public class PreparedStatements {
         } catch(SQLException e) {
             DBConnect.closeConnection();
             System.out.println(e);
-            return false;
         }
-        return true;
     }
 
-    public static boolean ModifyAppointment(Appointment modAppointment) {
+    /**
+     * This method modifies an Appointment entry already in the database.
+     * @param modAppointment The Appointment with the information to modify the database.
+     */
+    public static void ModifyAppointment(Appointment modAppointment) {
         try {
             DBConnect.openConnection();
             String query = "UPDATE Appointments SET  Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
@@ -124,12 +139,14 @@ public class PreparedStatements {
         } catch (SQLException e) {
             System.out.println(e);
             DBConnect.closeConnection();
-            return false;
         }
-        return true;
     }
 
-    public static boolean DeleteAppointment(Appointment delAppointment) {
+    /**
+     * This method deletes an Appointment entry from the database.
+     * @param delAppointment The Appointment to be deleted from the database.
+     */
+    public static void DeleteAppointment(Appointment delAppointment) {
         try {
             DBConnect.openConnection();
             String query = "DELETE FROM Appointments WHERE Appointment_ID = ?";
@@ -139,8 +156,6 @@ public class PreparedStatements {
             DBConnect.closeConnection();
         } catch(SQLException e) {
             System.out.println(e);
-            return false;
         }
-        return true;
     }
 }

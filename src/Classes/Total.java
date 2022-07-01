@@ -2,11 +2,13 @@ package Classes;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.time.Month;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
+/**
+ * This class creates the Total object for usage to track Appointment totals.
+ */
 public class Total {
     private int Total;
     private final Month Month;
@@ -14,6 +16,11 @@ public class Total {
     private final String MonthString;
     public static final ObservableList<Total> allTotals = FXCollections.observableArrayList();
 
+    /**
+     * This method is the constructor for the Total object.
+     * @param month The Month the Appointment starts in to have its total calculated.
+     * @param type The Type of Appointment to have its total calculated.
+     */
     public Total(Month month, String type) {
         this.Month = month;
         this.Type = type;
@@ -21,6 +28,12 @@ public class Total {
         this.MonthString = Month.getDisplayName(TextStyle.FULL, Locale.getDefault());
     }
 
+    /**
+     * This method handles changing the totals upon modifying an Appointment.
+     * @param tempAppointment The old Appointment.
+     * @param newMonth The Month of the new Apppointment.
+     * @param newType The Type of the new Appointment.
+     */
     public static void ModifyAppointment(Appointment tempAppointment, Month newMonth, String newType) {
         if (!(newMonth == tempAppointment.getStart().getMonth() && newType.equals(tempAppointment.getType()))) {
             boolean isInList = false;
@@ -54,25 +67,27 @@ public class Total {
         }
     }
 
-    public String getType() {
-        return Type;
-    }
+    /**
+     * This method is the getter for the Type of Appointment to be totaled.
+     * @return The Type of Appointment.
+     */
+    public String getType() { return Type; }
 
-    public java.time.Month getMonth() {
-        return Month;
-    }
+    /**
+     * This method is the getter for the total of the combination of Month and Type, mostly used for tables.
+     * @return The Total number for the Month and Type of Appointment.
+     */
+    public int getTotal() { return Total; }
 
-    public void setTotal(int total) {
-        Total = total;
-    }
-    public int getTotal() {
-        return Total;
-    }
+    /**
+     * This method is the getter for the String value of the Month of the Appointments to be totaled, mostly used for tables.
+     * @return The String value of the Month.
+     */
+    public String getMonthString() { return MonthString; }
 
-    public String getMonthString() {
-        return MonthString;
-    }
-
+    /**
+     * This method is designed to be used on setup, to get an initial list of totals from the Appointments.
+     */
     public static void setAllTotals() {
 
         for (Appointment x : Appointment.getAllAppointments()) {
@@ -98,6 +113,11 @@ public class Total {
         }
     }
 
+    /**
+     * This method modifies the list of totals when adding or removing an Appointment.
+     * @param a The Appointment being added or removed.
+     * @param del A boolean which if true signifies a deletion as opposed to an addition.
+     */
     public static void AddOrRemoveAppointment(Appointment a, boolean del) {
         for (Total x : allTotals) {
             if (x.Month == a.getStart().getMonth() && x.Type.equals(a.getType())) {

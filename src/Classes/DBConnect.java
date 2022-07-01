@@ -3,6 +3,9 @@ package Classes;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+/**
+ * This class contains methods for controlling the connection to the database.
+ */
 public class DBConnect {
     private static final String protocol = "jdbc";
     private static final String vendor = ":mysql:";
@@ -14,6 +17,9 @@ public class DBConnect {
     private static final String password = "Passw0rd!";
     private static Connection connection;
 
+    /**
+     * This method opens a connection with the database server.
+     */
     public static void openConnection() {
         try {
             Class.forName(driver);
@@ -21,12 +27,19 @@ public class DBConnect {
         } catch (Exception e) { System.out.println("Error:" + e.getMessage()); }
     }
 
+    /**
+     * This method safely closes the connection to the database.
+     */
     public static void closeConnection(){
         try {
             connection.close();
         } catch (Exception e) { System.out.println("Error:" + e.getMessage()); }
     }
 
+    /**
+     * This method is a getter for the connection for usage to communicate with the database.
+     * @return The connection with the database.
+     */
     public static Connection getConnection() {
         return connection;
     }

@@ -9,7 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,6 +17,9 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * This class is a Controller that is loaded on startup, and allows the user to log in. This class also is language sensitive.
+ */
 public class SignInController {
 
     @FXML public TextField txtUsername;
@@ -26,6 +28,9 @@ public class SignInController {
     @FXML public Label lblLocation;
     @FXML public Label lblPrompt;
 
+    /**
+     * This method executes on run and sets up the window according to the local language.
+     */
     @FXML private void initialize() {
         ResourceBundle loginBundle = ResourceBundle.getBundle("LoginResource");
         txtUsername.setPromptText(loginBundle.getString("txtUserPrompt"));
@@ -35,8 +40,10 @@ public class SignInController {
         lblLocation.setText(loginBundle.getString("lblLocation") + Locale.getDefault().getDisplayCountry());
     }
 
-    @FXML
-    protected void onSignInButtonClick(ActionEvent e) throws IOException {
+    /**
+     * This method runs on clicking sign in and logs the attempt as either successful or failed as well as the time, and also validates the username and password, and if correct, opens the DBHome FXML.
+     */
+    @FXML protected void onSignInButtonClick(ActionEvent e) {
         ResourceBundle loginBundle = ResourceBundle.getBundle("LoginResource");
         ButtonType btnConfirm= new ButtonType(loginBundle.getString("errConfirm"));
 

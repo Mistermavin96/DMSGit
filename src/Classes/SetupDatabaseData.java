@@ -5,6 +5,9 @@ import java.sql.Statement;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * This class runs statements for initial setup from the database.
+ */
 public class SetupDatabaseData {
     public static DateTimeFormatter timeDateFormat = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
     public static DateTimeFormatter toStringFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss").withZone(ZoneId.of("UTC"));

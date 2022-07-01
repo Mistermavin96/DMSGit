@@ -2,16 +2,13 @@ package Classes;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.time.*;
 import java.time.format.DateTimeParseException;
 import java.util.Objects;
-
 import static java.time.temporal.ChronoUnit.DAYS;
 
 /**
- * This class creates the Appointment object which is used to track appointments.
- *
+ * This class creates the Appointment object which is used to track appointments. This class also contains methods to manage appointments.
  */
 public class Appointment {
     private final int Appointment_ID;

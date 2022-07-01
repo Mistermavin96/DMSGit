@@ -8,6 +8,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * This is the Controller for the Customer FXML, and provides methods to add or modify a Customer.
+ */
 public class CustomerController {
 
     public static Customer tempCustomer;
@@ -21,6 +24,9 @@ public class CustomerController {
     @FXML public Button btnCancel;
     @FXML public Button btnSubmit;
 
+    /**
+     * This method fills the information into Text Fields and Combo Boxes and executes on run.
+     */
     @FXML public void initialize() {
         cmbCountry.setItems(Country.getAllCountries());
         if (tempCustomer != null) {
@@ -34,8 +40,10 @@ public class CustomerController {
         }
     }
 
-    @FXML
-    public void OnSubmitButtonClick() {
+    /**
+     * This method runs on clicking the Submit button, and handles field validation and running necessary methods to add or modify the Customer.
+     */
+    @FXML public void OnSubmitButtonClick() {
         if (cmbFirstLevelDomain.getSelectionModel().getSelectedItem() != null) {
             if (!txtCustomerName.getText().equals("") && txtCustomerName.getText().length() <= 50) {
                 if (!txtAddress.getText().equals("") && txtAddress.getText().length() <= 100) {
@@ -91,14 +99,18 @@ public class CustomerController {
         }
     }
 
-    @FXML
-    public void OnCancelButtonClick() {
+    /**
+     * This method runs on clicking the cancel button and is a more fancy way to close the window, cancel buttons are the future, embrace it.
+     */
+    @FXML public void OnCancelButtonClick() {
         Stage currentWindow = (Stage) btnCancel.getScene().getWindow();
         currentWindow.close();
     }
 
-    @FXML
-    public void OnCountrySelect() {
+    /**
+     * This method runs upon selecting a country and handles setting the Division Combo Box based on what Country was selected.
+     */
+    @FXML public void OnCountrySelect() {
         int cmbCountryID = cmbCountry.getSelectionModel().getSelectedItem().getCountry_ID();
         cmbFirstLevelDomain.setItems(FirstLevelDivision.filterByID(cmbCountryID));
     }

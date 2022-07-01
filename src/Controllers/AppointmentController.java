@@ -4,12 +4,14 @@ import Classes.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+/**
+ * This class is a controller for the Appointment FXML and contains methods to add or modify Appointments.
+ */
 public class AppointmentController {
 
     public static Appointment tempAppointment;
@@ -26,6 +28,9 @@ public class AppointmentController {
     @FXML public Button btnCancel;
     @FXML public Button btnSubmit;
 
+    /**
+     * This method provides statements to be run on initialization, which are setting up Text Fields and Combo Boxes.
+     */
     public void initialize() {
         cmbContact.setItems(Contact.getAllContacts());
         cmbCustomer.setItems(Customer.getAllCustomers());
@@ -44,8 +49,10 @@ public class AppointmentController {
         }
     }
 
-    @FXML
-    public void OnSubmitButtonClick() {
+    /**
+     * This method runs when the submit button is pressed and validates the input, as well as performs neccesary actions to confirm the addition or modification of an Appointment.
+     */
+    @FXML public void OnSubmitButtonClick() {
         if (!txtTitle.getText().equals("") && txtTitle.getText().length() <= 50) {
             if (!txtDescription.getText().equals("") && txtDescription.getText().length() <= 50) {
                 if (!txtLocation.getText().equals("") && txtLocation.getText().length() <= 50) {
@@ -154,8 +161,10 @@ public class AppointmentController {
         }
     }
 
-    @FXML
-    public void OnCancelButtonClick() {
+    /**
+     * This method runs when the Cancel button is pressed and provides a more stylish and user friendly way to close the window.
+     */
+    @FXML public void OnCancelButtonClick() {
         DBConnect.closeConnection();
         Stage currentWindow = (Stage) btnCancel.getScene().getWindow();
         currentWindow.close();

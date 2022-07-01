@@ -6,14 +6,12 @@ import Classes.PreparedStatements;
 import Classes.Total;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.*;
-
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -22,6 +20,9 @@ import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
+/**
+ * This class is the Controller for the main screen of the program, and has methods to handle all sorts of choices the user could make.
+ */
 public class DBHomeController {
 
     @FXML TableView<Appointment> AppointmentTable;
@@ -45,6 +46,9 @@ public class DBHomeController {
         @FXML TableColumn<Customer, String> C_Country;
         @FXML TableColumn<Customer, String> C_Division;
 
+    /**
+     * This method executes on run, and populates table with values, and alerts the user of upcoming appointments.
+     */
     @FXML public void initialize() {
         ObservableList<Customer> CustomerList = Customer.getAllCustomers();
         ObservableList<Appointment> AppointmentList = Appointment.getAllAppointments();
@@ -83,16 +87,11 @@ public class DBHomeController {
             A_Customer_ID.setCellValueFactory(new PropertyValueFactory<>("Customer_ID"));
             A_User_ID.setCellValueFactory(new PropertyValueFactory<>("User_ID"));
             A_Contact.setCellValueFactory(new PropertyValueFactory<>("Contact_Name"));
-            ObservableList<Month> MonthList = FXCollections.observableArrayList();
-            MonthList.addAll(Month.values());
-            ObservableList<Integer> WeekArray = FXCollections.observableArrayList();
-            int c = 1;
-            while (c < 53) {
-                WeekArray.add(c);
-                c++;
-            }
     }
 
+    /**
+     * This method runs when the delete customer button is clicked, and handles confirmation and deletion.
+     */
     public void onDeleteCustomerClick() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like to delete this customer?");
         Optional<ButtonType> confirmation = alert.showAndWait();
@@ -115,6 +114,9 @@ public class DBHomeController {
         }
     }
 
+    /**
+     * This method is run on clicking the update customer button, and handles opening the proper version of the Customer FXML. It also uses a lambda to refresh the customer table once the window is closed.
+     */
     public void onUpdateCustomerClick() throws IOException {
         if (CustomerTable.getSelectionModel().getSelectedItem() != null) {
             CustomerController.tempCustomer = CustomerTable.getSelectionModel().getSelectedItem();
@@ -130,6 +132,9 @@ public class DBHomeController {
         }
     }
 
+    /**
+     * This method is run on clicking the add customer button, and handles opening the proper version of the Customer FXML. It also uses a lambda to refresh the customer table once the window is closed.
+     */
     public void onAddCustomerClick() throws IOException {
         CustomerController.tempCustomer = null;
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("../FXML/Customer.fxml"));
@@ -140,6 +145,9 @@ public class DBHomeController {
         stage.setOnHidden(windowEvent -> CustomerTable.refresh());
     }
 
+    /**
+     * This method runs when the delete Appointment button is clicked, and handles confirmation and deletion.
+     */
     public void OnDeleteAppointmentClick() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like to delete this appointment?");
         Optional<ButtonType> confirmation = alert.showAndWait();
@@ -159,6 +167,9 @@ public class DBHomeController {
         }
     }
 
+    /**
+     * This method is run on clicking the update Appointmetn button, and handles opening the proper version of the Appointment FXML. It also uses a lambda to refresh the Appointment table once the window is closed.
+     */
     public void OnUpdateAppointmentClick() throws IOException {
         if (AppointmentTable.getSelectionModel().getSelectedItem() != null) {
             AppointmentController.tempAppointment = AppointmentTable.getSelectionModel().getSelectedItem();
@@ -174,6 +185,9 @@ public class DBHomeController {
         }
     }
 
+    /**
+     * This method is run on clicking the add Appointment button, and handles opening the proper version of the Appointment FXML. It also uses a lambda to refresh the Appointment table once the window is closed.
+     */
     public void onAddAppointmentClick() throws IOException {
         AppointmentController.tempAppointment = null;
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("../FXML/Appointment.fxml"));
@@ -184,6 +198,9 @@ public class DBHomeController {
         stage.setOnHidden(windowEvent -> AppointmentTable.refresh());
     }
 
+    /**
+     * This method runs upon clicking the Schedule By Contact button and handles opening the ScheduleReporting FXML
+     */
     public void OnScheduleClick() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("../FXML/ScheduleReporting.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -192,6 +209,9 @@ public class DBHomeController {
         stage.show();
     }
 
+    /**
+     * This method runs when the Appointment Count button is clicked, and handles opening the CountReporting FXML.
+     */
     public void OnCountClick() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("../FXML/CountReporting.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -200,21 +220,28 @@ public class DBHomeController {
         stage.show();
     }
 
+    /**
+     * This method runs when the Totals button is clicked and opens a popup window showing the number of customers and appointments.
+     */
     public void OnTotalsClick() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "The current number of customers is " + Customer.getAllCustomers().size() + " and the current number of appointments is " + Appointment.getAllAppointments().size());
         alert.showAndWait();
     }
 
-    public void onByMonthClick() {
-        AppointmentTable.setItems(Appointment.getAllAppointments().filtered(t -> t.getStart().getMonth() == LocalDateTime.now().getMonth() && t.getStart().getYear() == LocalDateTime.now().getYear()));
-    }
+    /**
+     * This method runs when clicking the by month button, and uses a lambda as a predicate to filter the table to only appointments this month.
+     */
+    public void onByMonthClick() { AppointmentTable.setItems(Appointment.getAllAppointments().filtered(t -> t.getStart().getMonth() == LocalDateTime.now().getMonth() && t.getStart().getYear() == LocalDateTime.now().getYear())); }
 
-
+    /**
+     * This method resets the table to display all appointments.
+     */
     public void OnDefaultClick() {
-        AppointmentTable.setItems(Appointment.getAllAppointments().filtered(t -> true));
+        AppointmentTable.setItems(Appointment.getAllAppointments());
     }
 
-    public void onByWeekClick() {
-        AppointmentTable.setItems(Appointment.getAllAppointments().filtered(t -> t.getStart().get(ChronoField.ALIGNED_WEEK_OF_YEAR) == LocalDateTime.now().get(ChronoField.ALIGNED_WEEK_OF_YEAR) && t.getStart().getYear() == LocalDateTime.now().getYear()));
-    }
+    /**
+     * This method uses a lambda as a predicate to filter the table to only show appointments that are in the ISO alligned week of this year.
+     */
+    public void onByWeekClick() { AppointmentTable.setItems(Appointment.getAllAppointments().filtered(t -> t.getStart().get(ChronoField.ALIGNED_WEEK_OF_YEAR) == LocalDateTime.now().get(ChronoField.ALIGNED_WEEK_OF_YEAR) && t.getStart().getYear() == LocalDateTime.now().getYear())); }
 }
