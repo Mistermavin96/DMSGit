@@ -298,10 +298,10 @@ public class Appointment {
     public static boolean overlapValidator(int CustomerID, ZonedDateTime startTime, ZonedDateTime endTime, int AppointmentID) {
         for (int i = 0; i < Appointment.getAllAppointments().size(); i++) {
             if (CustomerID == Appointment.getAllAppointments().get(i).Customer_ID && AppointmentID != Appointment.getAllAppointments().get(i).getAppointment_ID()) {
-                if (!(startTime.isAfter(Appointment.getAllAppointments().get(i).End) ||
-                        endTime.isBefore(Appointment.getAllAppointments().get(i).Start) ||
-                        startTime.isEqual(Appointment.getAllAppointments().get(i).Start) ||
-                        endTime.isEqual(Appointment.getAllAppointments().get(i).End))) {
+                if (startTime.isEqual(Appointment.getAllAppointments().get(i).Start) ||
+                        (startTime.isBefore(Appointment.getAllAppointments().get(i).Start) && endTime.isAfter(getAllAppointments().get(i).Start)) ||
+                        (startTime.isAfter(Appointment.getAllAppointments().get(i).Start) && startTime.isBefore(getAllAppointments().get(i).End))
+                ) {
                     return false;
                 }
             }

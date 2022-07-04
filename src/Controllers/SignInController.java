@@ -10,12 +10,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 /**
  * This class is a Controller that is loaded on startup, and allows the user to log in. This class also is language sensitive.
@@ -37,7 +36,7 @@ public class SignInController {
         txtPassword.setPromptText(loginBundle.getString("txtPassPrompt"));
         btnSignIn.setText(loginBundle.getString("btnSignIn"));
         lblPrompt.setText(loginBundle.getString("lblPrompt"));
-        lblLocation.setText(loginBundle.getString("lblLocation") + Locale.getDefault().getDisplayCountry());
+        lblLocation.setText(loginBundle.getString("lblLocation") + TimeZone.getDefault().getDisplayName());
     }
 
     /**
@@ -51,8 +50,7 @@ public class SignInController {
             String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
             FileWriter fw = new FileWriter("login_activity.txt",  true);
             PrintWriter out = new PrintWriter(fw);
-            out.print("Time Attempted: " + timeStamp + "\t");
-            out.print("Attempt Status: ");
+            out.print("Time Attempted: " + timeStamp + "\tAttempted By: " + txtUsername.getText() +  "\tAttempt Status: ");
 
             if (Objects.equals(txtUsername.getText(), "")) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, loginBundle.getString("errEmptyUser"), btnConfirm);

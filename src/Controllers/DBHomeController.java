@@ -52,16 +52,14 @@ public class DBHomeController {
     @FXML public void initialize() {
         ObservableList<Customer> CustomerList = Customer.getAllCustomers();
         ObservableList<Appointment> AppointmentList = Appointment.getAllAppointments();
-        int i = 0;
         boolean hasAppointment = false;
-        while (i < Appointment.getAllAppointments().size()) {
-            if (Appointment.getAllAppointments().get(i).getStart().until(ZonedDateTime.now(), ChronoUnit.MINUTES) <= 15) {
-                String alertMessage = "You have appointment of ID " + Appointment.getAllAppointments().get(i).getAppointment_ID() + " at " + Appointment.getAllAppointments().get(i).getStart().toLocalTime() + " on " + Appointment.getAllAppointments().get(i).getStart().toLocalDate();
+        for (Appointment x : Appointment.getAllAppointments()) {
+            if (ZonedDateTime.now().until(x.getStart(), ChronoUnit.MINUTES) <= 15 && ZonedDateTime.now().until(x.getStart(), ChronoUnit.MINUTES) >= 0) {
+                String alertMessage = "You have appointment of ID " + x.getAppointment_ID() + " at " + x.getStart().toLocalTime() + " on " + x.getStart().toLocalDate();
                 hasAppointment = true;
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, alertMessage);
                 alert.showAndWait();
             }
-            i++;
         }
         if (!hasAppointment) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "You have no upcoming appointments");

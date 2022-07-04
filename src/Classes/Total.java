@@ -42,7 +42,7 @@ public class Total {
             for (Total y : allTotals) {
                 if (y.Month == tempAppointment.getStart().getMonth() && y.Type.equals(tempAppointment.getType())) {
                     y.Total -= 1;
-                    if (y.Total == 0) {
+                    if (y.Total <= 0) {
                         toBeRemoved = y;
                     }
                 }
@@ -123,7 +123,7 @@ public class Total {
             if (x.Month == a.getStart().getMonth() && x.Type.equals(a.getType())) {
                 if (del) {
                     x.Total -= 1;
-                    if (x.Total == 0) {
+                    if (x.Total <= 0) {
                         allTotals.remove(x);
                     }
                     return;
@@ -133,6 +133,7 @@ public class Total {
             }
         }
         Total newTotal = new Total(a.getStart().getMonth(), a.getType());
+        newTotal.Total += 1;
         allTotals.add(newTotal);
     }
 }

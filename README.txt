@@ -4,8 +4,8 @@ Program Purpose: Schedule appointments with customers and manage customer data
 Author: Kavin Eberle
 Email: keberl2@wgu.edu
 
-Current Application Version: 1.0.4
-Version Date: 7/1/2022
+Current Application Version: 1.0.5
+Version Date: 7/4/2022
 IDE Version: IntelliJ IDEA Community Edition 2021.1.3 x64
 JDK Version: Java SE 17.0.1
 JFX Version: JavaFX-SDK 17.0.1
