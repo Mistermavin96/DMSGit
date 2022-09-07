@@ -46,6 +46,8 @@ public class DBHomeController {
         @FXML TableColumn<Customer, String> C_Country;
         @FXML TableColumn<Customer, String> C_Division;
 
+        @FXML TextField txtSearch;
+
     /**
      * This method executes on run, and populates table with values, and alerts the user of upcoming appointments.
      */
@@ -127,6 +129,14 @@ public class DBHomeController {
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a customer");
             alert.showAndWait();
+        }
+    }
+
+    public void onSearchType() throws IOException {
+        if (txtSearch.getText().equals("")) {
+            CustomerTable.setItems(Customer.getAllCustomers());
+        } else {
+            CustomerTable.setItems(Customer.getAllCustomers().filtered(t -> String.valueOf(t.getCustomer_ID()).equals(txtSearch.getText()) || t.getCustomer_Name().contains(txtSearch.getText())));
         }
     }
 

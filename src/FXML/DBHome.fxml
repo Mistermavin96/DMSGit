@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.DBHomeController">
@@ -50,8 +51,10 @@
     <Button layoutX="340.0" layoutY="641.0" mnemonicParsing="false" onAction="#OnUpdateAppointmentClick" text="Update" />
     <Button layoutX="625.0" layoutY="641.0" mnemonicParsing="false" onAction="#OnDeleteAppointmentClick" text="Delete" />
 
-    <Label layoutX="410.0" layoutY="14.0" style="-fx-font-weight: bold;" text="Customers" />
+    <Label layoutX="296.0" layoutY="14.0" style="-fx-font-weight: bold;" text="Customers" />
     <Label layoutX="326.0" layoutY="344.0" style="-fx-font-weight: bold;" text="Appointments" />
 
    <Label layoutX="74.0" layoutY="14.0" text="Reporting" />
+   <Label layoutX="489.0" layoutY="14.0" text="Search:" />
+   <TextField fx:id="txtSearch" layoutX="539.0" layoutY="10.0" onAction="#OnSearchType" promptText="Customer ID or Name" />
 </AnchorPane>
