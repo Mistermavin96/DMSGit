@@ -23,9 +23,6 @@
         </columns>
     </TableView>
 
-    <Label layoutX="489.0" layoutY="14.0" text="Search:" />
-    <TextField fx:id="txtSearch" layoutX="539.0" layoutY="10.0" onKeyTyped="#onSearchType" promptText="Customer ID or Name" />
-
     <Button layoutX="228.0" layoutY="281.0" onAction="#onAddCustomerClick" text="Add" />
     <Button layoutX="400.0" layoutY="281.0" mnemonicParsing="false" onAction="#onUpdateCustomerClick" text="Update" />
     <Button layoutX="600.0" layoutY="281.0" mnemonicParsing="false" onAction="#onDeleteCustomerClick" text="Delete" />
@@ -58,4 +55,6 @@
     <Label layoutX="326.0" layoutY="344.0" style="-fx-font-weight: bold;" text="Appointments" />
 
    <Label layoutX="74.0" layoutY="14.0" text="Reporting" />
+   <Label layoutX="489.0" layoutY="14.0" text="Search:" />
+   <TextField fx:id="txtSearch" layoutX="539.0" layoutY="10.0" onAction="#OnSearchType" promptText="Customer ID or Name" />
 </AnchorPane>

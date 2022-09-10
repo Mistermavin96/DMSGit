@@ -3,7 +3,9 @@ package Classes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Formatter;
 import java.util.Objects;
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -274,9 +276,10 @@ public class Appointment {
      * @return Whether the Appointment is within working hours or not.
      */
     public static boolean inHoursValidator(ZonedDateTime timeStart, ZonedDateTime timeEnd) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         ZonedDateTime estTimeStart = timeStart.withZoneSameInstant(ZoneId.of("America/New_York"));
         ZonedDateTime estTimeEnd = timeEnd.withZoneSameInstant(ZoneId.of("America/New_York"));
-        return estTimeStart.getHour() >= 8 && estTimeStart.getHour() <= 22 && estTimeEnd.getHour() >= 8 && estTimeEnd.getHour() <= 22 && DAYS.between(estTimeStart, estTimeEnd) < 1;
+        return estTimeStart.getHour() >= 8 && estTimeStart.getHour() <= 22 && estTimeEnd.getHour() >= 8 && estTimeEnd.getHour() <= 22 && (estTimeStart.format(formatter).equals(estTimeEnd.format(formatter)));
     }
 
     /**
