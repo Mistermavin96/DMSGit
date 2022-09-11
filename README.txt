@@ -21,6 +21,8 @@ To update an appointment, click the appointment to be updated, then click the up
 To delete an appointment, click the appointment to be deleted, then click the delete button under the appointment list, and confirm your decision.
 Appointments can be viewed by week or month by clicking the appropriate filter button above the appointments list.
 To produce a report, please click the report wanted from the buttons on the left of the customer table. The following section shows what each in order does.
+To search, type in letters occuring in the name you are searching, or the full ID number you are searching for.
+To clear a search, simply backspace until the search bar is empty, and the list will go back to default.
 
 Report types available:
 Total number of apppointments by type and month

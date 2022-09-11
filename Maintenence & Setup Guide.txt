@@ -1,0 +1,9 @@
+Load the DMSGit folder into IntelliJ.
+Go to File -> Project Structure, and in the Project tab, Select Java 11 as the Project SDK.
+Next, go to the Libraries tab, and under the lib Library, add the mysql-connector-java-8.0.25 driver
+Go to Run -> Edit Configurations, and in Environment Variables, type the following
+--module-path PathToJava11LibFolder --add-modules=javafx.controls,javafx.fxml
+Type Controllers.Main as main class
+Choose Java 11 as the SDK
+Then click Apply, and then OK.
+Finally, select Run -> Run 'Main'
